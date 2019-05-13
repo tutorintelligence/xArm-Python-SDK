@@ -46,6 +46,8 @@ with open(targetname, 'w+') as f2:
     for i in docs:
         if not re.match(pattern, i.strip(' \t\n')):
             f2.write(i)
+            if '```' not in i:
+                f2.write(' \t\n')
         else:
             i = i.strip(' \t\n')
             head = i.split(' ')[0]
