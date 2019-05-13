@@ -45,76 +45,69 @@
 |---------------@[def __connect__(self, port=None, baudrate=None, timeout=None):](#id44)   
 |---------------@[def __disconnect__(self):](#id45)   
 |---------------@[def __emergency_stop__(self):](#id46)   
-|---------------@[def __get_cgpio_analog__(self, ionum=None):](#id47)   
-|---------------@[def __get_cgpio_digital__(self, ionum=None):](#id48)   
-|---------------@[def __get_cgpio_state__(self):](#id49)   
-|---------------@[def __get_cmdnum__(self):](#id50)   
-|---------------@[def __get_err_warn_code__(self, show=False):](#id51)   
-|---------------@[def __get_forward_kinematics__(self, angles, input_is_radian=None, return_is_radian=None):](#id52)   
-|---------------@[def __get_gripper_err_code__(self):](#id53)   
-|---------------@[def __get_gripper_position__(self):](#id54)   
-|---------------@[def __get_inverse_kinematics__(self, pose, input_is_radian=None, return_is_radian=None):](#id55)   
-|---------------@[def __get_is_moving__(self):](#id56)   
-|---------------@[def __get_position__(self, is_radian=None):](#id57)   
-|---------------@[def __get_servo_angle__(self, servo_id=None, is_radian=None):](#id58)   
-|---------------@[def __get_servo_debug_msg__(self, show=False):](#id59)   
-|---------------@[def __get_state__(self):](#id60)   
-|---------------@[def __get_tgpio_analog__(self, ionum=None):](#id61)   
-|---------------@[def __get_tgpio_digital__(self, ionum=None):](#id62)   
-|---------------@[def __get_version__(self):](#id63)   
-|---------------@[def __is_joint_limit__(self, joint, is_radian=None):](#id64)   
-|---------------@[def __is_tcp_limit__(self, pose, is_radian=None):](#id65)   
-|---------------@[def __motion_enable__(self, enable=True, servo_id=None):](#id66)   
-|---------------@[def __move_arc_lines__(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):](#id67)   
-|---------------@[def __move_circle__(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):](#id68)   
-|---------------@[def __move_gohome__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):](#id69)   
-|---------------@[def __register_cmdnum_changed_callback__(self, callback=None):](#id70)   
-|---------------@[def __register_connect_changed_callback__(self, callback=None):](#id71)   
-|---------------@[def __register_error_warn_changed_callback__(self, callback=None):](#id72)   
-|---------------@[def __register_mode_changed_callback__(self, callback=None):](#id73)   
-|---------------@[def __register_mtable_mtbrake_changed_callback__(self, callback=None):](#id74)   
-|---------------@[def __register_report_callback__(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):](#id75)   
-|---------------@[def __register_report_location_callback__(self, callback=None, report_cartesian=True, report_joints=True):](#id76)   
-|---------------@[def __register_state_changed_callback__(self, callback=None):](#id77)   
-|---------------@[def __release_cmdnum_changed_callback__(self, callback=None):](#id78)   
-|---------------@[def __release_connect_changed_callback__(self, callback=None):](#id79)   
-|---------------@[def __release_error_warn_changed_callback__(self, callback=None):](#id80)   
-|---------------@[def __release_mode_changed_callback__(self, callback=None):](#id81)   
-|---------------@[def __release_mtable_mtbrake_changed_callback__(self, callback=None):](#id82)   
-|---------------@[def __release_report_callback__(self, callback=None):](#id83)   
-|---------------@[def __release_report_location_callback__(self, callback=None):](#id84)   
-|---------------@[def __release_state_changed_callback__(self, callback=None):](#id85)   
-|---------------@[def __reset__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):](#id86)   
-|---------------@[def __run_blockly_app__(self, path):](#id87)   
-|---------------@[def __save_conf__(self):](#id88)   
-|---------------@[def __send_cmd_sync__(self, command=None):](#id89)   
-|---------------@[def __set_cgpio_analog__(self, ionum, value):](#id90)   
-|---------------@[def __set_cgpio_digital__(self, ionum, value):](#id91)   
-|---------------@[def __set_cgpio_digital_input_function__(self, ionum, fun):](#id92)   
-|---------------@[def __set_cgpio_digital_output_function__(self, ionum, fun):](#id93)   
-|---------------@[def __set_collision_sensitivity__(self, value):](#id94)   
-|---------------@[def __set_gravity_direction__(self, direction):](#id95)   
-|---------------@[def __set_gripper_enable__(self, enable):](#id96)   
-|---------------@[def __set_gripper_mode__(self, mode):](#id97)   
-|---------------@[def __set_gripper_position__(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):](#id98)   
-|---------------@[def __set_gripper_speed__(self, speed):](#id99)   
-|---------------@[def __set_joint_jerk__(self, jerk, is_radian=None):](#id100)   
-|---------------@[def __set_joint_maxacc__(self, acc, is_radian=None):](#id101)   
-|---------------@[def __set_mode__(self, mode=0):](#id102)   
-|---------------@[def __set_pause_time__(self, sltime, wait=False):](#id103)   
-|---------------@[def __set_position__(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):](#id104)   
-|---------------@[def __set_servo_angle__(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):](#id105)   
-|---------------@[def __set_servo_angle_j__(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):](#id106)   
-|---------------@[def __set_servo_attach__(self, servo_id=None):](#id107)   
-|---------------@[def __set_servo_detach__(self, servo_id=None):](#id108)   
-|---------------@[def __set_state__(self, state=0):](#id109)   
-|---------------@[def __set_tcp_jerk__(self, jerk):](#id110)   
-|---------------@[def __set_tcp_load__(self, weight, center_of_gravity):](#id111)   
-|---------------@[def __set_tcp_maxacc__(self, acc):](#id112)   
-|---------------@[def __set_tcp_offset__(self, offset, is_radian=None):](#id113)   
-|---------------@[def __set_teach_sensitivity__(self, value):](#id114)   
-|---------------@[def __set_tgpio_digital__(self, ionum, value):](#id115)   
-|---------------@[def __shutdown_system__(self, value=1):](#id116)   
+|---------------@[def __get_cmdnum__(self):](#id47)   
+|---------------@[def __get_err_warn_code__(self, show=False):](#id48)   
+|---------------@[def __get_forward_kinematics__(self, angles, input_is_radian=None, return_is_radian=None):](#id49)   
+|---------------@[def __get_gpio_analog__(self, ionum=None):](#id50)   
+|---------------@[def __get_gpio_digital__(self, ionum=None):](#id51)   
+|---------------@[def __get_gripper_err_code__(self):](#id52)   
+|---------------@[def __get_gripper_position__(self):](#id53)   
+|---------------@[def __get_inverse_kinematics__(self, pose, input_is_radian=None, return_is_radian=None):](#id54)   
+|---------------@[def __get_is_moving__(self):](#id55)   
+|---------------@[def __get_position__(self, is_radian=None):](#id56)   
+|---------------@[def __get_servo_angle__(self, servo_id=None, is_radian=None):](#id57)   
+|---------------@[def __get_servo_debug_msg__(self, show=False):](#id58)   
+|---------------@[def __get_state__(self):](#id59)   
+|---------------@[def __get_version__(self):](#id60)   
+|---------------@[def __is_joint_limit__(self, joint, is_radian=None):](#id61)   
+|---------------@[def __is_tcp_limit__(self, pose, is_radian=None):](#id62)   
+|---------------@[def __motion_enable__(self, enable=True, servo_id=None):](#id63)   
+|---------------@[def __move_arc_lines__(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):](#id64)   
+|---------------@[def __move_circle__(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):](#id65)   
+|---------------@[def __move_gohome__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):](#id66)   
+|---------------@[def __register_cmdnum_changed_callback__(self, callback=None):](#id67)   
+|---------------@[def __register_connect_changed_callback__(self, callback=None):](#id68)   
+|---------------@[def __register_error_warn_changed_callback__(self, callback=None):](#id69)   
+|---------------@[def __register_mode_changed_callback__(self, callback=None):](#id70)   
+|---------------@[def __register_mtable_mtbrake_changed_callback__(self, callback=None):](#id71)   
+|---------------@[def __register_report_callback__(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):](#id72)   
+|---------------@[def __register_report_location_callback__(self, callback=None, report_cartesian=True, report_joints=True):](#id73)   
+|---------------@[def __register_state_changed_callback__(self, callback=None):](#id74)   
+|---------------@[def __release_cmdnum_changed_callback__(self, callback=None):](#id75)   
+|---------------@[def __release_connect_changed_callback__(self, callback=None):](#id76)   
+|---------------@[def __release_error_warn_changed_callback__(self, callback=None):](#id77)   
+|---------------@[def __release_mode_changed_callback__(self, callback=None):](#id78)   
+|---------------@[def __release_mtable_mtbrake_changed_callback__(self, callback=None):](#id79)   
+|---------------@[def __release_report_callback__(self, callback=None):](#id80)   
+|---------------@[def __release_report_location_callback__(self, callback=None):](#id81)   
+|---------------@[def __release_state_changed_callback__(self, callback=None):](#id82)   
+|---------------@[def __reset__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):](#id83)   
+|---------------@[def __run_blockly_app__(self, path):](#id84)   
+|---------------@[def __save_conf__(self):](#id85)   
+|---------------@[def __send_cmd_sync__(self, command=None):](#id86)   
+|---------------@[def __set_collision_sensitivity__(self, value):](#id87)   
+|---------------@[def __set_gpio_digital__(self, ionum, value):](#id88)   
+|---------------@[def __set_gravity_direction__(self, direction):](#id89)   
+|---------------@[def __set_gripper_enable__(self, enable):](#id90)   
+|---------------@[def __set_gripper_mode__(self, mode):](#id91)   
+|---------------@[def __set_gripper_position__(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):](#id92)   
+|---------------@[def __set_gripper_speed__(self, speed):](#id93)   
+|---------------@[def __set_joint_jerk__(self, jerk, is_radian=None):](#id94)   
+|---------------@[def __set_joint_maxacc__(self, acc, is_radian=None):](#id95)   
+|---------------@[def __set_mode__(self, mode=0):](#id96)   
+|---------------@[def __set_pause_time__(self, sltime, wait=False):](#id97)   
+|---------------@[def __set_position__(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):](#id98)   
+|---------------@[def __set_servo_angle__(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):](#id99)   
+|---------------@[def __set_servo_angle_j__(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):](#id100)   
+|---------------@[def __set_servo_attach__(self, servo_id=None):](#id101)   
+|---------------@[def __set_servo_detach__(self, servo_id=None):](#id102)   
+|---------------@[def __set_state__(self, state=0):](#id103)   
+|---------------@[def __set_tcp_jerk__(self, jerk):](#id104)   
+|---------------@[def __set_tcp_load__(self, weight, center_of_gravity):](#id105)   
+|---------------@[def __set_tcp_maxacc__(self, acc):](#id106)   
+|---------------@[def __set_tcp_offset__(self, offset, is_radian=None):](#id107)   
+|---------------@[def __set_teach_sensitivity__(self, value):](#id108)   
+|---------------@[def __shutdown_system__(self, value=1):](#id109)   
 
 xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api 	
  	
@@ -444,35 +437,13 @@ Note:
 Note: 	
     1. This interface does not automatically clear the error. If there is an error, you need to handle it according to the error code. 	
 ``` 	
-<h4 id=id47>def get_cgpio_analog(self, ionum=None):</h4>   
- 	
-```Get the analog value of the specified Controller GPIO 	
-:param ionum: 0 or 1 or None(both 0 and 1), default is None 	
-:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id48>def get_cgpio_digital(self, ionum=None):</h4>   
- 	
-```Get the digital value of the specified Controller GPIO 	
- 	
-:param ionum: 0~7 or None(both 0~7), default is None 	
-:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id49>def get_cgpio_state(self):</h4>   
- 	
-```Get the state of the Controller GPIO 	
-:return: code, states 	
-    code: See the API code documentation for details. 	
-    states: [...] 	
-``` 	
-<h4 id=id50>def get_cmdnum(self):</h4>   
+<h4 id=id47>def get_cmdnum(self):</h4>   
  	
 ```Get the cmd count in cache 	
 :return: tuple((code, cmd_num)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id51>def get_err_warn_code(self, show=False):</h4>   
+<h4 id=id48>def get_err_warn_code(self, show=False):</h4>   
  	
 ```Get the controller error and warn code 	
  	
@@ -482,7 +453,7 @@ Note:
     error_code: See the controller error code documentation for details. 	
     warn_code: See the controller warn code documentation for details. 	
 ``` 	
-<h4 id=id52>def get_forward_kinematics(self, angles, input_is_radian=None, return_is_radian=None):</h4>   
+<h4 id=id49>def get_forward_kinematics(self, angles, input_is_radian=None, return_is_radian=None):</h4>   
  	
 ```Get forward kinematics 	
  	
@@ -494,21 +465,36 @@ Note:
     pose: [x(mm), y(mm), z(mm), roll(rad or бу), pitch(rad or бу), yaw(rad or бу)] or [] 	
         Note: the roll/pitch/yaw value is radians if return_is_radian is True, else бу 	
 ``` 	
-<h4 id=id53>def get_gripper_err_code(self):</h4>   
+<h4 id=id50>def get_gpio_analog(self, ionum=None):</h4>   
+ 	
+```Get the analog value of the specified GPIO 	
+:param ionum: 1 or 2 or None(both 1 and 2), default is None 	
+:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
+    code: See the API code documentation for details. 	
+``` 	
+<h4 id=id51>def get_gpio_digital(self, ionum=None):</h4>   
+ 	
+```Get the digital value of the specified GPIO 	
+ 	
+:param ionum: 1 or 2 or None(both 1 and 2), default is None 	
+:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
+    code: See the API code documentation for details. 	
+``` 	
+<h4 id=id52>def get_gripper_err_code(self):</h4>   
  	
 ```Get the gripper error code 	
  	
 :return: tuple((code, err_code)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id54>def get_gripper_position(self):</h4>   
+<h4 id=id53>def get_gripper_position(self):</h4>   
  	
 ```Get the gripper position 	
  	
 :return: tuple((code, pos)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id55>def get_inverse_kinematics(self, pose, input_is_radian=None, return_is_radian=None):</h4>   
+<h4 id=id54>def get_inverse_kinematics(self, pose, input_is_radian=None, return_is_radian=None):</h4>   
  	
 ```Get inverse kinematics 	
  	
@@ -521,12 +507,12 @@ Note:
     angles: [angle-1(rad or бу), angle-2, ..., angle-(Number of axes)] or [] 	
         Note: the returned angle value is radians if return_is_radian is True, else бу 	
 ``` 	
-<h4 id=id56>def get_is_moving(self):</h4>   
+<h4 id=id55>def get_is_moving(self):</h4>   
  	
 ```Check xArm is moving or not 	
 :return: True/False 	
 ``` 	
-<h4 id=id57>def get_position(self, is_radian=None):</h4>   
+<h4 id=id56>def get_position(self, is_radian=None):</h4>   
  	
 ```Get the cartesian position 	
 Note: 	
@@ -537,7 +523,7 @@ Note:
 :return: tuple((code, [x, y, z, roll, pitch, yaw])), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id58>def get_servo_angle(self, servo_id=None, is_radian=None):</h4>   
+<h4 id=id57>def get_servo_angle(self, servo_id=None, is_radian=None):</h4>   
  	
 ```Get the servo angle 	
 Note: 	
@@ -551,7 +537,7 @@ Note:
 :return: tuple((code, angle list if servo_id is None or 8 else angle)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id59>def get_servo_debug_msg(self, show=False):</h4>   
+<h4 id=id58>def get_servo_debug_msg(self, show=False):</h4>   
  	
 ```Get the servo debug msg, used only for debugging 	
  	
@@ -559,7 +545,7 @@ Note:
 :return: tuple((code, servo_info_list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id60>def get_state(self):</h4>   
+<h4 id=id59>def get_state(self):</h4>   
  	
 ```Get state 	
  	
@@ -571,29 +557,14 @@ Note:
         3: suspended 	
         4: stopping 	
 ``` 	
-<h4 id=id61>def get_tgpio_analog(self, ionum=None):</h4>   
- 	
-```Get the analog value of the specified Tool GPIO 	
-:param ionum: 0 or 1 or None(both 0 and 1), default is None 	
-:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id62>def get_tgpio_digital(self, ionum=None):</h4>   
- 	
-```Get the digital value of the specified Tool GPIO 	
- 	
-:param ionum: 0 or 1 or None(both 0 and 1), default is None 	
-:return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id63>def get_version(self):</h4>   
+<h4 id=id60>def get_version(self):</h4>   
  	
 ```Get the xArm version 	
  	
 :return: tuple((code, version)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id64>def is_joint_limit(self, joint, is_radian=None):</h4>   
+<h4 id=id61>def is_joint_limit(self, joint, is_radian=None):</h4>   
  	
 ```Check the joint is in limit 	
  	
@@ -603,7 +574,7 @@ Note:
     code: See the API code documentation for details. 	
     limit: True/False/None, limit or not, or failed 	
 ``` 	
-<h4 id=id65>def is_tcp_limit(self, pose, is_radian=None):</h4>   
+<h4 id=id62>def is_tcp_limit(self, pose, is_radian=None):</h4>   
  	
 ```Check the tcp pose is in limit 	
  	
@@ -613,7 +584,7 @@ Note:
     code: See the API code documentation for details. 	
     limit: True/False/None, limit or not, or failed 	
 ``` 	
-<h4 id=id66>def motion_enable(self, enable=True, servo_id=None):</h4>   
+<h4 id=id63>def motion_enable(self, enable=True, servo_id=None):</h4>   
  	
 ```Motion enable 	
  	
@@ -622,7 +593,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id67>def move_arc_lines(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):</h4>   
+<h4 id=id64>def move_arc_lines(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):</h4>   
  	
 ```Continuous linear motion with interpolation 	
 Note: 	
@@ -644,7 +615,7 @@ Note:
 :param mvtime: 0, reserved  	
 :param wait: whether to wait for the arm to complete, default is False 	
 ``` 	
-<h4 id=id68>def move_circle(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id65>def move_circle(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```The motion calculates the trajectory of the space circle according to the three-point coordinates. 	
 The three-point coordinates are (current starting point, pose1, pose2). 	
@@ -664,7 +635,7 @@ The three-point coordinates are (current starting point, pose1, pose2).
         code < 0: the last_used_tcp_speed/last_used_tcp_acc will not be modified 	
         code >= 0: the last_used_tcp_speed/last_used_tcp_acc will be modified 	
 ``` 	
-<h4 id=id69>def move_gohome(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
+<h4 id=id66>def move_gohome(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
  	
 ```Move to go home (Back to zero), the API will modify self.last_used_position and self.last_used_angles value 	
 Warnning: without limit detection 	
@@ -684,7 +655,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id70>def register_cmdnum_changed_callback(self, callback=None):</h4>   
+<h4 id=id67>def register_cmdnum_changed_callback(self, callback=None):</h4>   
  	
 ```Register the cmdnum changed callback, only available if enable_report is True 	
  	
@@ -695,7 +666,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id71>def register_connect_changed_callback(self, callback=None):</h4>   
+<h4 id=id68>def register_connect_changed_callback(self, callback=None):</h4>   
  	
 ```Register the connect status changed callback 	
  	
@@ -707,7 +678,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id72>def register_error_warn_changed_callback(self, callback=None):</h4>   
+<h4 id=id69>def register_error_warn_changed_callback(self, callback=None):</h4>   
  	
 ```Register the error code or warn code changed callback, only available if enable_report is True 	
  	
@@ -719,7 +690,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id73>def register_mode_changed_callback(self, callback=None):</h4>   
+<h4 id=id70>def register_mode_changed_callback(self, callback=None):</h4>   
  	
 ```Register the mode changed callback, only available if enable_report is True and the connect way is socket 	
  	
@@ -730,7 +701,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id74>def register_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
+<h4 id=id71>def register_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
  	
 ```Register the motor enable states or motor brake states changed callback, only available if enable_report is True and the connect way is socket 	
  	
@@ -742,7 +713,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id75>def register_report_callback(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):</h4>   
+<h4 id=id72>def register_report_callback(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):</h4>   
  	
 ```Register the report callback, only available if enable_report is True 	
  	
@@ -768,7 +739,7 @@ Note:
 :param report_cmd_num: report cmdnum or not, default is True 	
 :return: True/False 	
 ``` 	
-<h4 id=id76>def register_report_location_callback(self, callback=None, report_cartesian=True, report_joints=True):</h4>   
+<h4 id=id73>def register_report_location_callback(self, callback=None, report_cartesian=True, report_joints=True):</h4>   
  	
 ```Register the report location callback, only available if enable_report is True 	
  	
@@ -782,7 +753,7 @@ Note:
 :param report_joints: report or not, True/False, default is True 	
 :return: True/False 	
 ``` 	
-<h4 id=id77>def register_state_changed_callback(self, callback=None):</h4>   
+<h4 id=id74>def register_state_changed_callback(self, callback=None):</h4>   
  	
 ```Register the state status changed callback, only available if enable_report is True 	
  	
@@ -793,63 +764,63 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id78>def release_cmdnum_changed_callback(self, callback=None):</h4>   
+<h4 id=id75>def release_cmdnum_changed_callback(self, callback=None):</h4>   
  	
 ```Release the cmdnum changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id79>def release_connect_changed_callback(self, callback=None):</h4>   
+<h4 id=id76>def release_connect_changed_callback(self, callback=None):</h4>   
  	
 ```Release the connect changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id80>def release_error_warn_changed_callback(self, callback=None):</h4>   
+<h4 id=id77>def release_error_warn_changed_callback(self, callback=None):</h4>   
  	
 ```Release the error warn changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id81>def release_mode_changed_callback(self, callback=None):</h4>   
+<h4 id=id78>def release_mode_changed_callback(self, callback=None):</h4>   
  	
 ```Release the mode changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id82>def release_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
+<h4 id=id79>def release_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
  	
 ```Release the motor enable states or motor brake states changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id83>def release_report_callback(self, callback=None):</h4>   
+<h4 id=id80>def release_report_callback(self, callback=None):</h4>   
  	
 ```Release the report callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id84>def release_report_location_callback(self, callback=None):</h4>   
+<h4 id=id81>def release_report_location_callback(self, callback=None):</h4>   
  	
 ```Release the location report callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id85>def release_state_changed_callback(self, callback=None):</h4>   
+<h4 id=id82>def release_state_changed_callback(self, callback=None):</h4>   
  	
 ```Release the state changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id86>def reset(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
+<h4 id=id83>def reset(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
  	
 ```Reset the xArm 	
 Warnning: without limit detection 	
@@ -867,12 +838,12 @@ Note:
 :param wait: whether to wait for the arm to complete, default is False 	
 :param timeout: maximum waiting time(unit: second), default is 10s, only valid if wait is True 	
 ``` 	
-<h4 id=id87>def run_blockly_app(self, path):</h4>   
+<h4 id=id84>def run_blockly_app(self, path):</h4>   
  	
 ```Run the app generated by xArmStudio software 	
 :param path: app path 	
 ``` 	
-<h4 id=id88>def save_conf(self):</h4>   
+<h4 id=id85>def save_conf(self):</h4>   
  	
 ```Save config 	
 Note: 	
@@ -882,7 +853,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id89>def send_cmd_sync(self, command=None):</h4>   
+<h4 id=id86>def send_cmd_sync(self, command=None):</h4>   
  	
 ```Send cmd and wait (only waiting the cmd response, not waiting for the movement) 	
 Note: 	
@@ -919,44 +890,7 @@ Note:
 :return: code or tuple((code, ...)) 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id90>def set_cgpio_analog(self, ionum, value):</h4>   
- 	
-```Set the analog value of the specified Controller GPIO 	
- 	
-:param ionum: 0 or 1 	
-:param value: value 	
-:return: code 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id91>def set_cgpio_digital(self, ionum, value):</h4>   
- 	
-```Set the digital value of the specified Controller GPIO 	
- 	
-:param ionum: 0~7 	
-:param value: value 	
-:return: code 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id92>def set_cgpio_digital_input_function(self, ionum, fun):</h4>   
- 	
-```Set the digital input functional mode of the Controller GPIO 	
-:param ionum: 0~7 	
-:param fun: functional mode 	
-:return: code 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id93>def set_cgpio_digital_output_function(self, ionum, fun):</h4>   
- 	
-```Set the digital output functional mode of the specified Controller GPIO 	
-:param ionum: 0~7 	
-:param fun: functionnal mode 	
-    0: system in stopping 	
-    1: controller has error 	
-    2: in motion 	
-:return: code 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id94>def set_collision_sensitivity(self, value):</h4>   
+<h4 id=id87>def set_collision_sensitivity(self, value):</h4>   
  	
 ```Set the sensitivity of collision 	
  	
@@ -964,7 +898,16 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id95>def set_gravity_direction(self, direction):</h4>   
+<h4 id=id88>def set_gpio_digital(self, ionum, value):</h4>   
+ 	
+```Set the digital value of the specified GPIO 	
+ 	
+:param ionum: 1 or 2 	
+:param value: value 	
+:return: code 	
+    code: See the API code documentation for details. 	
+``` 	
+<h4 id=id89>def set_gravity_direction(self, direction):</h4>   
  	
 ```Set the direction of gravity 	
  	
@@ -972,7 +915,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id96>def set_gripper_enable(self, enable):</h4>   
+<h4 id=id90>def set_gripper_enable(self, enable):</h4>   
  	
 ```Set the gripper enable 	
  	
@@ -980,7 +923,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id97>def set_gripper_mode(self, mode):</h4>   
+<h4 id=id91>def set_gripper_mode(self, mode):</h4>   
  	
 ```Set the gripper mode 	
  	
@@ -988,7 +931,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id98>def set_gripper_position(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):</h4>   
+<h4 id=id92>def set_gripper_position(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):</h4>   
  	
 ```Set the gripper position 	
  	
@@ -1000,7 +943,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id99>def set_gripper_speed(self, speed):</h4>   
+<h4 id=id93>def set_gripper_speed(self, speed):</h4>   
  	
 ```Set the gripper speed 	
  	
@@ -1008,7 +951,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id100>def set_joint_jerk(self, jerk, is_radian=None):</h4>   
+<h4 id=id94>def set_joint_jerk(self, jerk, is_radian=None):</h4>   
  	
 ```Set the jerk of Joint space 	
 Note: 	
@@ -1022,7 +965,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id101>def set_joint_maxacc(self, acc, is_radian=None):</h4>   
+<h4 id=id95>def set_joint_maxacc(self, acc, is_radian=None):</h4>   
  	
 ```Set the max acceleration of Joint space 	
  	
@@ -1031,7 +974,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id102>def set_mode(self, mode=0):</h4>   
+<h4 id=id96>def set_mode(self, mode=0):</h4>   
  	
 ```Set the xArm mode 	
  	
@@ -1043,7 +986,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id103>def set_pause_time(self, sltime, wait=False):</h4>   
+<h4 id=id97>def set_pause_time(self, sltime, wait=False):</h4>   
  	
 ```Set the arm pause time, xArm will pause sltime second 	
  	
@@ -1052,7 +995,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id104>def set_position(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id98>def set_position(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```Set the cartesian position, the API will modify self.last_used_position value 	
 Note: 	
@@ -1087,7 +1030,7 @@ Note:
         code < 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will not be modified 	
         code >= 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will be modified 	
 ``` 	
-<h4 id=id105>def set_servo_angle(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id99>def set_servo_angle(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```Set the servo angle, the API will modify self.last_used_angles value 	
 Note: 	
@@ -1120,7 +1063,7 @@ Note:
         code < 0: the last_used_angles/last_used_joint_speed/last_used_joint_acc will not be modified 	
         code >= 0: the last_used_angles/last_used_joint_speed/last_used_joint_acc will be modified 	
 ``` 	
-<h4 id=id106>def set_servo_angle_j(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):</h4>   
+<h4 id=id100>def set_servo_angle_j(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):</h4>   
  	
 ```Set the servo angle, execute only the last instruction, need to be set to servo motion mode 	
 Note: 	
@@ -1135,7 +1078,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id107>def set_servo_attach(self, servo_id=None):</h4>   
+<h4 id=id101>def set_servo_attach(self, servo_id=None):</h4>   
  	
 ```Attach the servo 	
  	
@@ -1147,7 +1090,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id108>def set_servo_detach(self, servo_id=None):</h4>   
+<h4 id=id102>def set_servo_detach(self, servo_id=None):</h4>   
  	
 ```Detach the servo, be sure to do protective work before unlocking to avoid injury or damage. 	
  	
@@ -1159,7 +1102,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id109>def set_state(self, state=0):</h4>   
+<h4 id=id103>def set_state(self, state=0):</h4>   
  	
 ```Set the xArm state 	
  	
@@ -1170,7 +1113,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id110>def set_tcp_jerk(self, jerk):</h4>   
+<h4 id=id104>def set_tcp_jerk(self, jerk):</h4>   
  	
 ```Set the translational jerk of Cartesian space 	
 Note: 	
@@ -1183,7 +1126,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id111>def set_tcp_load(self, weight, center_of_gravity):</h4>   
+<h4 id=id105>def set_tcp_load(self, weight, center_of_gravity):</h4>   
  	
 ```Set the load 	
  	
@@ -1192,7 +1135,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id112>def set_tcp_maxacc(self, acc):</h4>   
+<h4 id=id106>def set_tcp_maxacc(self, acc):</h4>   
  	
 ```Set the max translational acceleration of Cartesian space 	
 Note: 	
@@ -1205,7 +1148,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id113>def set_tcp_offset(self, offset, is_radian=None):</h4>   
+<h4 id=id107>def set_tcp_offset(self, offset, is_radian=None):</h4>   
  	
 ```Set the tool coordinate system offset at the end 	
 Note: 	
@@ -1220,7 +1163,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id114>def set_teach_sensitivity(self, value):</h4>   
+<h4 id=id108>def set_teach_sensitivity(self, value):</h4>   
  	
 ```Set the sensitivity of drag and teach 	
  	
@@ -1228,16 +1171,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id115>def set_tgpio_digital(self, ionum, value):</h4>   
- 	
-```Set the digital value of the specified Tool GPIO 	
- 	
-:param ionum: 0 or 1 	
-:param value: value 	
-:return: code 	
-    code: See the API code documentation for details. 	
-``` 	
-<h4 id=id116>def shutdown_system(self, value=1):</h4>   
+<h4 id=id109>def shutdown_system(self, value=1):</h4>   
  	
 ```Shutdown the xArm controller system 	
  	
