@@ -118,33 +118,33 @@
 
 xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api 	
  	
-<h2 id=id0>class __XArmAPI__</h2>   
+<h2 id=id0>class XArmAPI</h2>   
 **************************************** 	
  	
-<h3 id=id1>__Attributes__</h3>   
+<h3 id=id1>Attributes</h3>   
 **************************************** 	
-<h4 id=id2>__angles__</h4>   
+<h4 id=id2>angles</h4>   
 ```Servo angles 	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
  	
 :return: [angle1(бу or rad), angle2(бу or rad), ..., anglen(бу or rad)] 	
 ``` 	
-<h4 id=id3>__axis__</h4>   
+<h4 id=id3>axis</h4>   
 ```Axis number, only available in socket way and enable_report is True and report_type is 'rich' 	
 ``` 	
-<h4 id=id4>__cmd_num__</h4>   
+<h4 id=id4>cmd_num</h4>   
 ```Number of command caches in the controller 	
 ``` 	
-<h4 id=id5>__collision_sensitivity__</h4>   
+<h4 id=id5>collision_sensitivity</h4>   
 ```The sensitivity value of collision, only available in socket way and  enable_report is True and report_type is 'rich' 	
  	
 :return: 0~255 	
 ``` 	
-<h4 id=id6>__connected__</h4>   
+<h4 id=id6>connected</h4>   
 ```Connection status 	
 ``` 	
-<h4 id=id7>__core__</h4>   
+<h4 id=id7>core</h4>   
 ```Core layer API, set only for advanced developers, please do not use 	
 Ex: 	
     self.core.move_line(...) 	
@@ -152,50 +152,50 @@ Ex:
     self.core.move_joint(...) 	
     ... 	
 ``` 	
-<h4 id=id8>__default_is_radian__</h4>   
+<h4 id=id8>default_is_radian</h4>   
 ```The default unit is radians or not 	
 ``` 	
-<h4 id=id9>__device_type__</h4>   
+<h4 id=id9>device_type</h4>   
 ```Device type, only available in socket way and  enable_report is True and report_type is 'rich' 	
 ``` 	
-<h4 id=id10>__error_code__</h4>   
+<h4 id=id10>error_code</h4>   
 ```Controller error code. See the error code documentation for details. 	
 ``` 	
-<h4 id=id11>__gravity_direction__</h4>   
+<h4 id=id11>gravity_direction</h4>   
 ```gravity direction, only available in socket way and enable_report is True and report_type is 'rich' 	
 :return: 	
 ``` 	
-<h4 id=id12>__has_err_warn__</h4>   
+<h4 id=id12>has_err_warn</h4>   
 ```Contorller have an error or warning or not 	
  	
 :return: True/False 	
 ``` 	
-<h4 id=id13>__has_error__</h4>   
+<h4 id=id13>has_error</h4>   
 ```Controller have an error or not 	
 ``` 	
-<h4 id=id14>__has_warn__</h4>   
+<h4 id=id14>has_warn</h4>   
 ```Controller have an error or not 	
 ``` 	
-<h4 id=id15>__joint_acc_limit__</h4>   
+<h4 id=id15>joint_acc_limit</h4>   
 ```Joint acceleration limit, only available in socket way and enable_report is True and report_type is 'rich'  	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
  	
 :return: [min_joint_acc(бу/s^2 or rad/s^2), max_joint_acc(бу/s^2 or rad/s^2)] 	
 ``` 	
-<h4 id=id16>__joint_speed_limit__</h4>   
+<h4 id=id16>joint_speed_limit</h4>   
 ```Joint speed limit,  only available in socket way and enable_report is True and report_type is 'rich' 	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
      	
 :return: [min_joint_speed(бу/s or rad/s), max_joint_speed(бу/s or rad/s)] 	
 ``` 	
-<h4 id=id17>__joints_torque__</h4>   
+<h4 id=id17>joints_torque</h4>   
 ```Joints torque, only available in socket way and  enable_report is True and report_type is 'rich' 	
  	
 :return: [joint-1, ....] 	
 ``` 	
-<h4 id=id18>__last_used_angles__</h4>   
+<h4 id=id18>last_used_angles</h4>   
 ```The last used servo angles, default value of parameter angle of interface set_servo_angle 	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
@@ -204,21 +204,21 @@ Note:
  	
 :return: [angle1(бу or rad), angle2(бу or rad), ..., angle7(бу or rad)] 	
 ``` 	
-<h4 id=id19>__last_used_joint_acc__</h4>   
+<h4 id=id19>last_used_joint_acc</h4>   
 ```The last used joint acceleration, default value of parameter mvacc of interface set_servo_angle 	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
  	
 :return: acceleration (бу/s^2 or rad/s^2) 	
 ``` 	
-<h4 id=id20>__last_used_joint_speed__</h4>   
+<h4 id=id20>last_used_joint_speed</h4>   
 ```The last used joint speed, default value of parameter speed of interface set_servo_angle 	
 Note: 	
     1. If self.default_is_radian is True, the returned value is in radians 	
  	
 :return: speed (бу/s or rad/s) 	
 ``` 	
-<h4 id=id21>__last_used_position__</h4>   
+<h4 id=id21>last_used_position</h4>   
 ```The last used cartesion position, default value of parameter x/y/z/roll/pitch/yaw of interface set_position 	
 Note: 	
     1. If self.default_is_radian is True, the returned value (only roll/pitch/yaw) is in radians 	
@@ -227,20 +227,20 @@ Note:
  	
 :return: [x(mm), y(mm), z(mm), roll(бу or rad), pitch(бу or rad), yaw(бу or rad)] 	
 ``` 	
-<h4 id=id22>__last_used_tcp_acc__</h4>   
+<h4 id=id22>last_used_tcp_acc</h4>   
 ```The last used cartesion acceleration, default value of parameter mvacc of interface set_position/move_circle 	
  	
 :return: acceleration (mm/s^2) 	
 ``` 	
-<h4 id=id23>__last_used_tcp_speed__</h4>   
+<h4 id=id23>last_used_tcp_speed</h4>   
 ```The last used cartesion speed, default value of parameter speed of interface set_position/move_circle 	
  	
 :return: speed (mm/s) 	
 ``` 	
-<h4 id=id24>__master_id__</h4>   
+<h4 id=id24>master_id</h4>   
 ```Master id, only available in socket way and enable_report is True and report_type is 'rich' 	
 ``` 	
-<h4 id=id25>__mode__</h4>   
+<h4 id=id25>mode</h4>   
 ```xArm modeгмonly available in socket way and  enable_report is True 	
  	
 :return:  	
@@ -249,7 +249,7 @@ Note:
     2: joint teaching mode 	
     3: cartesian teaching mode (invalid) 	
 ``` 	
-<h4 id=id26>__motor_brake_states__</h4>   
+<h4 id=id26>motor_brake_states</h4>   
 ```Motor brake state list, only available in socket way and  enable_report is True and report_type is 'rich' 	
 Note: 	
     For a robot with a number of axes n, only the first n states are valid, and the latter are reserved. 	
@@ -259,7 +259,7 @@ Note:
         0: enable 	
         1: disable 	
 ``` 	
-<h4 id=id27>__motor_enable_states__</h4>   
+<h4 id=id27>motor_enable_states</h4>   
 ```Motor enable state list, only available in socket way and  enable_report is True and report_type is 'rich' 	
 Note: 	
     For a robot with a number of axes n, only the first n states are valid, and the latter are reserved. 	
@@ -269,17 +269,17 @@ Note:
         0: disable 	
         1: enable 	
 ``` 	
-<h4 id=id28>__position__</h4>   
+<h4 id=id28>position</h4>   
 ```Cartesion position 	
 Note: 	
     1. If self.default_is_radian is True, the returned value (only roll/pitch/yaw) is in radians 	
  	
 return: [x(mm), y(mm), z(mm), roll(бу or rad), pitch(бу or rad), yaw(бу or rad)] 	
 ``` 	
-<h4 id=id29>__slave_id__</h4>   
+<h4 id=id29>slave_id</h4>   
 ```Slave id, only available in socket way and enable_report is True and report_type is 'rich' 	
 ``` 	
-<h4 id=id30>__state__</h4>   
+<h4 id=id30>state</h4>   
 ```xArm state 	
  	
 :return:  	
@@ -288,44 +288,44 @@ return: [x(mm), y(mm), z(mm), roll(бу or rad), pitch(бу or rad), yaw(бу or rad)]
     3: suspended 	
     4: stopping 	
 ``` 	
-<h4 id=id31>__tcp_acc_limit__</h4>   
+<h4 id=id31>tcp_acc_limit</h4>   
 ```Joint acceleration limit, only available in socket way and enable_report is True and report_type is 'rich'  	
  	
 :return: [min_tcp_acc(mm/s^2), max_tcp_acc(mm/s^2)] 	
 ``` 	
-<h4 id=id32>__tcp_load__</h4>   
+<h4 id=id32>tcp_load</h4>   
 ```xArm tcp load, only available in socket way and  enable_report is True and report_type is 'rich' 	
  	
 :return: [weight, center of gravity]  	
     such as: [weight(kg), [x(mm), y(mm), z(mm)]] 	
 ``` 	
-<h4 id=id33>__tcp_offset__</h4>   
+<h4 id=id33>tcp_offset</h4>   
 ```Cartesion position offset, only available in socket way and enable_report is True  	
 Note: 	
     1. If self.default_is_radian is True, the returned value(roll_offset/pitch_offset/yaw_offset) is in radians 	
  	
 :return: [x_offset(mm), y_offset(mm), z_offset(mm), roll_offset(бу or rad), pitch_offset(бу or rad), yaw_offset(бу or rad)] 	
 ``` 	
-<h4 id=id34>__tcp_speed_limit__</h4>   
+<h4 id=id34>tcp_speed_limit</h4>   
 ```Joint acceleration limit, only available in socket way and enable_report is True and report_type is 'rich'  	
  	
 :return: [min_tcp_acc(mm/s), max_tcp_acc(mm/s)] 	
 ``` 	
-<h4 id=id35>__teach_sensitivity__</h4>   
+<h4 id=id35>teach_sensitivity</h4>   
 ```The sensitivity value of drag and teach, only available in socket way and  enable_report is True and report_type is 'rich' 	
  	
 :return: 0~255 	
 ``` 	
-<h4 id=id36>__version__</h4>   
+<h4 id=id36>version</h4>   
 ```xArm version 	
 ``` 	
-<h4 id=id37>__warn_code__</h4>   
+<h4 id=id37>warn_code</h4>   
 ```Controller warn code. See the warn code documentation for details. 	
 ``` 	
 **************************************** 	
-<h3 id=id38>__Methods__</h3>   
+<h3 id=id38>Methods</h3>   
 **************************************** 	
-<h4 id=id39>def __\__init__\__(self, port=None, is_radian=False, do_not_open=False, **kwargs):</h4>   
+<h4 id=id39>def \init\(self, port=None, is_radian=False, do_not_open=False, **kwargs):</h4>   
  	
 ```The API wrapper of xArm 	
 Note: Orientation of attitude angle 	
@@ -396,7 +396,7 @@ Note: Orientation of attitude angle
     check_cmdnum_limit: check the cmdnum out of limit or not, default is True 	
         Note: only available in the interface `set_position` and `set_servo_angle` 	
 ``` 	
-<h4 id=id40>def __clean_conf__(self):</h4>   
+<h4 id=id40>def clean_conf(self):</h4>   
  	
 ```Clean current config and restore system default settings 	
 Note: 	
@@ -405,28 +405,28 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id41>def __clean_error__(self):</h4>   
+<h4 id=id41>def clean_error(self):</h4>   
  	
 ```Clean the error, need to be manually enabled motion and set state after clean error 	
  	
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id42>def __clean_gripper_error__(self):</h4>   
+<h4 id=id42>def clean_gripper_error(self):</h4>   
  	
 ```Clean the gripper error 	
  	
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id43>def __clean_warn__(self):</h4>   
+<h4 id=id43>def clean_warn(self):</h4>   
  	
 ```Clean the warn 	
  	
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id44>def __connect__(self, port=None, baudrate=None, timeout=None):</h4>   
+<h4 id=id44>def connect(self, port=None, baudrate=None, timeout=None):</h4>   
  	
 ```Connect to xArm 	
  	
@@ -434,24 +434,24 @@ Note:
 :param baudrate: baudrate, only available in serial way, default is the value when initializing an instance 	
 :param timeout: timeout, only available in serial way, default is the value when initializing an instance 	
 ``` 	
-<h4 id=id45>def __disconnect__(self):</h4>   
+<h4 id=id45>def disconnect(self):</h4>   
  	
 ```Disconnect 	
 ``` 	
-<h4 id=id46>def __emergency_stop__(self):</h4>   
+<h4 id=id46>def emergency_stop(self):</h4>   
  	
 ```Emergency stop (set_state(4) -> motion_enable(True) -> set_state(0)) 	
 Note: 	
     1. This interface does not automatically clear the error. If there is an error, you need to handle it according to the error code. 	
 ``` 	
-<h4 id=id47>def __get_cgpio_analog__(self, ionum=None):</h4>   
+<h4 id=id47>def get_cgpio_analog(self, ionum=None):</h4>   
  	
 ```Get the analog value of the specified Controller GPIO 	
 :param ionum: 0 or 1 or None(both 0 and 1), default is None 	
 :return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id48>def __get_cgpio_digital__(self, ionum=None):</h4>   
+<h4 id=id48>def get_cgpio_digital(self, ionum=None):</h4>   
  	
 ```Get the digital value of the specified Controller GPIO 	
  	
@@ -459,20 +459,20 @@ Note:
 :return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id49>def __get_cgpio_state__(self):</h4>   
+<h4 id=id49>def get_cgpio_state(self):</h4>   
  	
 ```Get the state of the Controller GPIO 	
 :return: code, states 	
     code: See the API code documentation for details. 	
     states: [...] 	
 ``` 	
-<h4 id=id50>def __get_cmdnum__(self):</h4>   
+<h4 id=id50>def get_cmdnum(self):</h4>   
  	
 ```Get the cmd count in cache 	
 :return: tuple((code, cmd_num)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id51>def __get_err_warn_code__(self, show=False):</h4>   
+<h4 id=id51>def get_err_warn_code(self, show=False):</h4>   
  	
 ```Get the controller error and warn code 	
  	
@@ -482,7 +482,7 @@ Note:
     error_code: See the controller error code documentation for details. 	
     warn_code: See the controller warn code documentation for details. 	
 ``` 	
-<h4 id=id52>def __get_forward_kinematics__(self, angles, input_is_radian=None, return_is_radian=None):</h4>   
+<h4 id=id52>def get_forward_kinematics(self, angles, input_is_radian=None, return_is_radian=None):</h4>   
  	
 ```Get forward kinematics 	
  	
@@ -494,21 +494,21 @@ Note:
     pose: [x(mm), y(mm), z(mm), roll(rad or бу), pitch(rad or бу), yaw(rad or бу)] or [] 	
         Note: the roll/pitch/yaw value is radians if return_is_radian is True, else бу 	
 ``` 	
-<h4 id=id53>def __get_gripper_err_code__(self):</h4>   
+<h4 id=id53>def get_gripper_err_code(self):</h4>   
  	
 ```Get the gripper error code 	
  	
 :return: tuple((code, err_code)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id54>def __get_gripper_position__(self):</h4>   
+<h4 id=id54>def get_gripper_position(self):</h4>   
  	
 ```Get the gripper position 	
  	
 :return: tuple((code, pos)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id55>def __get_inverse_kinematics__(self, pose, input_is_radian=None, return_is_radian=None):</h4>   
+<h4 id=id55>def get_inverse_kinematics(self, pose, input_is_radian=None, return_is_radian=None):</h4>   
  	
 ```Get inverse kinematics 	
  	
@@ -521,12 +521,12 @@ Note:
     angles: [angle-1(rad or бу), angle-2, ..., angle-(Number of axes)] or [] 	
         Note: the returned angle value is radians if return_is_radian is True, else бу 	
 ``` 	
-<h4 id=id56>def __get_is_moving__(self):</h4>   
+<h4 id=id56>def get_is_moving(self):</h4>   
  	
 ```Check xArm is moving or not 	
 :return: True/False 	
 ``` 	
-<h4 id=id57>def __get_position__(self, is_radian=None):</h4>   
+<h4 id=id57>def get_position(self, is_radian=None):</h4>   
  	
 ```Get the cartesian position 	
 Note: 	
@@ -537,7 +537,7 @@ Note:
 :return: tuple((code, [x, y, z, roll, pitch, yaw])), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id58>def __get_servo_angle__(self, servo_id=None, is_radian=None):</h4>   
+<h4 id=id58>def get_servo_angle(self, servo_id=None, is_radian=None):</h4>   
  	
 ```Get the servo angle 	
 Note: 	
@@ -551,7 +551,7 @@ Note:
 :return: tuple((code, angle list if servo_id is None or 8 else angle)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id59>def __get_servo_debug_msg__(self, show=False):</h4>   
+<h4 id=id59>def get_servo_debug_msg(self, show=False):</h4>   
  	
 ```Get the servo debug msg, used only for debugging 	
  	
@@ -559,7 +559,7 @@ Note:
 :return: tuple((code, servo_info_list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id60>def __get_state__(self):</h4>   
+<h4 id=id60>def get_state(self):</h4>   
  	
 ```Get state 	
  	
@@ -571,14 +571,14 @@ Note:
         3: suspended 	
         4: stopping 	
 ``` 	
-<h4 id=id61>def __get_tgpio_analog__(self, ionum=None):</h4>   
+<h4 id=id61>def get_tgpio_analog(self, ionum=None):</h4>   
  	
 ```Get the analog value of the specified Tool GPIO 	
 :param ionum: 0 or 1 or None(both 0 and 1), default is None 	
 :return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id62>def __get_tgpio_digital__(self, ionum=None):</h4>   
+<h4 id=id62>def get_tgpio_digital(self, ionum=None):</h4>   
  	
 ```Get the digital value of the specified Tool GPIO 	
  	
@@ -586,14 +586,14 @@ Note:
 :return: tuple((code, value or value list)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id63>def __get_version__(self):</h4>   
+<h4 id=id63>def get_version(self):</h4>   
  	
 ```Get the xArm version 	
  	
 :return: tuple((code, version)), only when code is 0, the returned result is correct. 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id64>def __is_joint_limit__(self, joint, is_radian=None):</h4>   
+<h4 id=id64>def is_joint_limit(self, joint, is_radian=None):</h4>   
  	
 ```Check the joint is in limit 	
  	
@@ -603,7 +603,7 @@ Note:
     code: See the API code documentation for details. 	
     limit: True/False/None, limit or not, or failed 	
 ``` 	
-<h4 id=id65>def __is_tcp_limit__(self, pose, is_radian=None):</h4>   
+<h4 id=id65>def is_tcp_limit(self, pose, is_radian=None):</h4>   
  	
 ```Check the tcp pose is in limit 	
  	
@@ -613,7 +613,7 @@ Note:
     code: See the API code documentation for details. 	
     limit: True/False/None, limit or not, or failed 	
 ``` 	
-<h4 id=id66>def __motion_enable__(self, enable=True, servo_id=None):</h4>   
+<h4 id=id66>def motion_enable(self, enable=True, servo_id=None):</h4>   
  	
 ```Motion enable 	
  	
@@ -622,7 +622,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id67>def __move_arc_lines__(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):</h4>   
+<h4 id=id67>def move_arc_lines(self, paths, is_radian=None, times=1, first_pause_time=0.1, repeat_pause_time=0, automatic_calibration=True, speed=None, mvacc=None, mvtime=None, wait=False):</h4>   
  	
 ```Continuous linear motion with interpolation 	
 Note: 	
@@ -644,7 +644,7 @@ Note:
 :param mvtime: 0, reserved  	
 :param wait: whether to wait for the arm to complete, default is False 	
 ``` 	
-<h4 id=id68>def __move_circle__(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id68>def move_circle(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```The motion calculates the trajectory of the space circle according to the three-point coordinates. 	
 The three-point coordinates are (current starting point, pose1, pose2). 	
@@ -664,7 +664,7 @@ The three-point coordinates are (current starting point, pose1, pose2).
         code < 0: the last_used_tcp_speed/last_used_tcp_acc will not be modified 	
         code >= 0: the last_used_tcp_speed/last_used_tcp_acc will be modified 	
 ``` 	
-<h4 id=id69>def __move_gohome__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
+<h4 id=id69>def move_gohome(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
  	
 ```Move to go home (Back to zero), the API will modify self.last_used_position and self.last_used_angles value 	
 Warnning: without limit detection 	
@@ -684,7 +684,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id70>def __register_cmdnum_changed_callback__(self, callback=None):</h4>   
+<h4 id=id70>def register_cmdnum_changed_callback(self, callback=None):</h4>   
  	
 ```Register the cmdnum changed callback, only available if enable_report is True 	
  	
@@ -695,7 +695,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id71>def __register_connect_changed_callback__(self, callback=None):</h4>   
+<h4 id=id71>def register_connect_changed_callback(self, callback=None):</h4>   
  	
 ```Register the connect status changed callback 	
  	
@@ -707,7 +707,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id72>def __register_error_warn_changed_callback__(self, callback=None):</h4>   
+<h4 id=id72>def register_error_warn_changed_callback(self, callback=None):</h4>   
  	
 ```Register the error code or warn code changed callback, only available if enable_report is True 	
  	
@@ -719,7 +719,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id73>def __register_mode_changed_callback__(self, callback=None):</h4>   
+<h4 id=id73>def register_mode_changed_callback(self, callback=None):</h4>   
  	
 ```Register the mode changed callback, only available if enable_report is True and the connect way is socket 	
  	
@@ -730,7 +730,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id74>def __register_mtable_mtbrake_changed_callback__(self, callback=None):</h4>   
+<h4 id=id74>def register_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
  	
 ```Register the motor enable states or motor brake states changed callback, only available if enable_report is True and the connect way is socket 	
  	
@@ -742,7 +742,7 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id75>def __register_report_callback__(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):</h4>   
+<h4 id=id75>def register_report_callback(self, callback=None, report_cartesian=True, report_joints=True, report_state=True, report_error_code=True, report_warn_code=True, report_mtable=True, report_mtbrake=True, report_cmd_num=True):</h4>   
  	
 ```Register the report callback, only available if enable_report is True 	
  	
@@ -768,7 +768,7 @@ Note:
 :param report_cmd_num: report cmdnum or not, default is True 	
 :return: True/False 	
 ``` 	
-<h4 id=id76>def __register_report_location_callback__(self, callback=None, report_cartesian=True, report_joints=True):</h4>   
+<h4 id=id76>def register_report_location_callback(self, callback=None, report_cartesian=True, report_joints=True):</h4>   
  	
 ```Register the report location callback, only available if enable_report is True 	
  	
@@ -782,7 +782,7 @@ Note:
 :param report_joints: report or not, True/False, default is True 	
 :return: True/False 	
 ``` 	
-<h4 id=id77>def __register_state_changed_callback__(self, callback=None):</h4>   
+<h4 id=id77>def register_state_changed_callback(self, callback=None):</h4>   
  	
 ```Register the state status changed callback, only available if enable_report is True 	
  	
@@ -793,63 +793,63 @@ Note:
     } 	
 :return: True/False 	
 ``` 	
-<h4 id=id78>def __release_cmdnum_changed_callback__(self, callback=None):</h4>   
+<h4 id=id78>def release_cmdnum_changed_callback(self, callback=None):</h4>   
  	
 ```Release the cmdnum changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id79>def __release_connect_changed_callback__(self, callback=None):</h4>   
+<h4 id=id79>def release_connect_changed_callback(self, callback=None):</h4>   
  	
 ```Release the connect changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id80>def __release_error_warn_changed_callback__(self, callback=None):</h4>   
+<h4 id=id80>def release_error_warn_changed_callback(self, callback=None):</h4>   
  	
 ```Release the error warn changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id81>def __release_mode_changed_callback__(self, callback=None):</h4>   
+<h4 id=id81>def release_mode_changed_callback(self, callback=None):</h4>   
  	
 ```Release the mode changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id82>def __release_mtable_mtbrake_changed_callback__(self, callback=None):</h4>   
+<h4 id=id82>def release_mtable_mtbrake_changed_callback(self, callback=None):</h4>   
  	
 ```Release the motor enable states or motor brake states changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id83>def __release_report_callback__(self, callback=None):</h4>   
+<h4 id=id83>def release_report_callback(self, callback=None):</h4>   
  	
 ```Release the report callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id84>def __release_report_location_callback__(self, callback=None):</h4>   
+<h4 id=id84>def release_report_location_callback(self, callback=None):</h4>   
  	
 ```Release the location report callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id85>def __release_state_changed_callback__(self, callback=None):</h4>   
+<h4 id=id85>def release_state_changed_callback(self, callback=None):</h4>   
  	
 ```Release the state changed callback 	
  	
 :param callback:  	
 :return: True/False 	
 ``` 	
-<h4 id=id86>def __reset__(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
+<h4 id=id86>def reset(self, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None):</h4>   
  	
 ```Reset the xArm 	
 Warnning: without limit detection 	
@@ -867,12 +867,12 @@ Note:
 :param wait: whether to wait for the arm to complete, default is False 	
 :param timeout: maximum waiting time(unit: second), default is 10s, only valid if wait is True 	
 ``` 	
-<h4 id=id87>def __run_blockly_app__(self, path):</h4>   
+<h4 id=id87>def run_blockly_app(self, path):</h4>   
  	
 ```Run the app generated by xArmStudio software 	
 :param path: app path 	
 ``` 	
-<h4 id=id88>def __save_conf__(self):</h4>   
+<h4 id=id88>def save_conf(self):</h4>   
  	
 ```Save config 	
 Note: 	
@@ -882,7 +882,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id89>def __send_cmd_sync__(self, command=None):</h4>   
+<h4 id=id89>def send_cmd_sync(self, command=None):</h4>   
  	
 ```Send cmd and wait (only waiting the cmd response, not waiting for the movement) 	
 Note: 	
@@ -919,7 +919,7 @@ Note:
 :return: code or tuple((code, ...)) 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id90>def __set_cgpio_analog__(self, ionum, value):</h4>   
+<h4 id=id90>def set_cgpio_analog(self, ionum, value):</h4>   
  	
 ```Set the analog value of the specified Controller GPIO 	
  	
@@ -928,7 +928,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id91>def __set_cgpio_digital__(self, ionum, value):</h4>   
+<h4 id=id91>def set_cgpio_digital(self, ionum, value):</h4>   
  	
 ```Set the digital value of the specified Controller GPIO 	
  	
@@ -937,7 +937,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id92>def __set_cgpio_digital_input_function__(self, ionum, fun):</h4>   
+<h4 id=id92>def set_cgpio_digital_input_function(self, ionum, fun):</h4>   
  	
 ```Set the digital input functional mode of the Controller GPIO 	
 :param ionum: 0~7 	
@@ -945,7 +945,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id93>def __set_cgpio_digital_output_function__(self, ionum, fun):</h4>   
+<h4 id=id93>def set_cgpio_digital_output_function(self, ionum, fun):</h4>   
  	
 ```Set the digital output functional mode of the specified Controller GPIO 	
 :param ionum: 0~7 	
@@ -956,7 +956,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id94>def __set_collision_sensitivity__(self, value):</h4>   
+<h4 id=id94>def set_collision_sensitivity(self, value):</h4>   
  	
 ```Set the sensitivity of collision 	
  	
@@ -964,7 +964,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id95>def __set_gravity_direction__(self, direction):</h4>   
+<h4 id=id95>def set_gravity_direction(self, direction):</h4>   
  	
 ```Set the direction of gravity 	
  	
@@ -972,7 +972,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id96>def __set_gripper_enable__(self, enable):</h4>   
+<h4 id=id96>def set_gripper_enable(self, enable):</h4>   
  	
 ```Set the gripper enable 	
  	
@@ -980,7 +980,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id97>def __set_gripper_mode__(self, mode):</h4>   
+<h4 id=id97>def set_gripper_mode(self, mode):</h4>   
  	
 ```Set the gripper mode 	
  	
@@ -988,7 +988,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id98>def __set_gripper_position__(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):</h4>   
+<h4 id=id98>def set_gripper_position(self, pos, wait=False, speed=None, auto_enable=False, timeout=None):</h4>   
  	
 ```Set the gripper position 	
  	
@@ -1000,7 +1000,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id99>def __set_gripper_speed__(self, speed):</h4>   
+<h4 id=id99>def set_gripper_speed(self, speed):</h4>   
  	
 ```Set the gripper speed 	
  	
@@ -1008,7 +1008,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id100>def __set_joint_jerk__(self, jerk, is_radian=None):</h4>   
+<h4 id=id100>def set_joint_jerk(self, jerk, is_radian=None):</h4>   
  	
 ```Set the jerk of Joint space 	
 Note: 	
@@ -1022,7 +1022,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id101>def __set_joint_maxacc__(self, acc, is_radian=None):</h4>   
+<h4 id=id101>def set_joint_maxacc(self, acc, is_radian=None):</h4>   
  	
 ```Set the max acceleration of Joint space 	
  	
@@ -1031,7 +1031,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id102>def __set_mode__(self, mode=0):</h4>   
+<h4 id=id102>def set_mode(self, mode=0):</h4>   
  	
 ```Set the xArm mode 	
  	
@@ -1043,7 +1043,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id103>def __set_pause_time__(self, sltime, wait=False):</h4>   
+<h4 id=id103>def set_pause_time(self, sltime, wait=False):</h4>   
  	
 ```Set the arm pause time, xArm will pause sltime second 	
  	
@@ -1052,7 +1052,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id104>def __set_position__(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id104>def set_position(self, x=None, y=None, z=None, roll=None, pitch=None, yaw=None, radius=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```Set the cartesian position, the API will modify self.last_used_position value 	
 Note: 	
@@ -1087,7 +1087,7 @@ Note:
         code < 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will not be modified 	
         code >= 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will be modified 	
 ``` 	
-<h4 id=id105>def __set_servo_angle__(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
+<h4 id=id105>def set_servo_angle(self, servo_id=None, angle=None, speed=None, mvacc=None, mvtime=None, relative=False, is_radian=None, wait=False, timeout=None, **kwargs):</h4>   
  	
 ```Set the servo angle, the API will modify self.last_used_angles value 	
 Note: 	
@@ -1120,7 +1120,7 @@ Note:
         code < 0: the last_used_angles/last_used_joint_speed/last_used_joint_acc will not be modified 	
         code >= 0: the last_used_angles/last_used_joint_speed/last_used_joint_acc will be modified 	
 ``` 	
-<h4 id=id106>def __set_servo_angle_j__(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):</h4>   
+<h4 id=id106>def set_servo_angle_j(self, angles, speed=None, mvacc=None, mvtime=None, is_radian=None, **kwargs):</h4>   
  	
 ```Set the servo angle, execute only the last instruction, need to be set to servo motion mode 	
 Note: 	
@@ -1135,7 +1135,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id107>def __set_servo_attach__(self, servo_id=None):</h4>   
+<h4 id=id107>def set_servo_attach(self, servo_id=None):</h4>   
  	
 ```Attach the servo 	
  	
@@ -1147,7 +1147,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id108>def __set_servo_detach__(self, servo_id=None):</h4>   
+<h4 id=id108>def set_servo_detach(self, servo_id=None):</h4>   
  	
 ```Detach the servo, be sure to do protective work before unlocking to avoid injury or damage. 	
  	
@@ -1159,7 +1159,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id109>def __set_state__(self, state=0):</h4>   
+<h4 id=id109>def set_state(self, state=0):</h4>   
  	
 ```Set the xArm state 	
  	
@@ -1170,7 +1170,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id110>def __set_tcp_jerk__(self, jerk):</h4>   
+<h4 id=id110>def set_tcp_jerk(self, jerk):</h4>   
  	
 ```Set the translational jerk of Cartesian space 	
 Note: 	
@@ -1183,7 +1183,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id111>def __set_tcp_load__(self, weight, center_of_gravity):</h4>   
+<h4 id=id111>def set_tcp_load(self, weight, center_of_gravity):</h4>   
  	
 ```Set the load 	
  	
@@ -1192,7 +1192,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id112>def __set_tcp_maxacc__(self, acc):</h4>   
+<h4 id=id112>def set_tcp_maxacc(self, acc):</h4>   
  	
 ```Set the max translational acceleration of Cartesian space 	
 Note: 	
@@ -1205,7 +1205,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id113>def __set_tcp_offset__(self, offset, is_radian=None):</h4>   
+<h4 id=id113>def set_tcp_offset(self, offset, is_radian=None):</h4>   
  	
 ```Set the tool coordinate system offset at the end 	
 Note: 	
@@ -1220,7 +1220,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id114>def __set_teach_sensitivity__(self, value):</h4>   
+<h4 id=id114>def set_teach_sensitivity(self, value):</h4>   
  	
 ```Set the sensitivity of drag and teach 	
  	
@@ -1228,7 +1228,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id115>def __set_tgpio_digital__(self, ionum, value):</h4>   
+<h4 id=id115>def set_tgpio_digital(self, ionum, value):</h4>   
  	
 ```Set the digital value of the specified Tool GPIO 	
  	
@@ -1237,7 +1237,7 @@ Note:
 :return: code 	
     code: See the API code documentation for details. 	
 ``` 	
-<h4 id=id116>def __shutdown_system__(self, value=1):</h4>   
+<h4 id=id116>def shutdown_system(self, value=1):</h4>   
  	
 ```Shutdown the xArm controller system 	
  	

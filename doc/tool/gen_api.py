@@ -53,7 +53,7 @@ with open(targetname, 'w+') as f2:
             head = i.split(' ')[0]
             if head in d.keys():
                 menu = ''.join(
-                    ['<h', str(len(head)), ' id=id', str(head_id), '>', i[len(head):].strip(' \t\n'), '</h',
+                    ['<h', str(len(head)), ' id=id', str(head_id), '>', i[len(head):].strip(' \t\n').replace('__', ''), '</h',
                      str(len(head)), '>   \n'])
                 f2.write(menu)
                 head_id += 1
