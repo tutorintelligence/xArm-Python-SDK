@@ -66,6 +66,7 @@ def get_all_ips():
         sock.settimeout(3)
         sock.connect(('8.8.8.8', 53))
         addrs.add(sock.getsockname()[0])
+        sock.close()
     except:
         pass
     return addrs
