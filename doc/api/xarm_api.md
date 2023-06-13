@@ -1,4 +1,4 @@
-xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
+xArm-Python-SDK API Documentation (1.11.6): class XArmAPI in module xarm.wrapper.xarm_api
 
 ## class __XArmAPI__
 ****************************************
@@ -684,6 +684,17 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
 
+#### def __close_lite6_gripper__(self):
+
+> Close the gripper of Lite6 series robotic arms  
+> Note:  
+> &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.10.0  
+> &ensp;&ensp;&ensp;&ensp;2. this API can only be used on Lite6 series robotic arms  
+>   
+> :return: code  
+> &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+
+
 #### def __config_cgpio_reset_when_stop__(self, on_off):
 
 > Config the Controller GPIO reset the digital output when the robot is in stop state  
@@ -795,8 +806,9 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > Note:  
 > &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.8.3  
 > &ensp;&ensp;&ensp;&ensp;2. the Six-axis Force Torque Sensor is required (the third party is not currently supported)  
+> &ensp;&ensp;&ensp;&ensp;3. starting from SDK v1.11.0, the centroid unit is millimeters (originally meters)  
 >   
-> :param iden_result_list:  [mass，x_centroid，y_centroid，z_centroid，Fx_offset，Fy_offset，Fz_offset，Tx_offset，Ty_offset，Tz_ffset]  
+> :param iden_result_list:  [mass(kg), x_centroid(mm), y_centroid(mm), z_centroid(mm), Fx_offset, Fy_offset, Fz_offset, Tx_offset, Ty_offset, Tz_ffset]  
 > :param association_setting_tcp_load: whether to convert the parameter to the corresponding tcp load and set, default is False  
 > &ensp;&ensp;&ensp;&ensp;Note: If True, the value of tcp load will be modified  
 > :return: code  
@@ -821,10 +833,11 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > Note:  
 > &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.8.3  
 > &ensp;&ensp;&ensp;&ensp;2. the Six-axis Force Torque Sensor is required (the third party is not currently supported)  
+> &ensp;&ensp;&ensp;&ensp;3. starting from SDK v1.11.0, the centroid unit is millimeters (originally meters)  
 >   
 > :return: tuple((code, load)) only when code is 0, the returned result is correct.  
 > &ensp;&ensp;&ensp;&ensp;code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
-> &ensp;&ensp;&ensp;&ensp;load:  [mass，x_centroid，y_centroid，z_centroid，Fx_offset，Fy_offset，Fz_offset，Tx_offset，Ty_offset，Tz_ffset]
+> &ensp;&ensp;&ensp;&ensp;load:  [mass(kg), x_centroid(mm), y_centroid(mm), z_centroid(mm), Fx_offset, Fy_offset, Fz_offset, Tx_offset, Ty_offset, Tz_ffset]
 
 
 #### def __ft_sensor_set_zero__(self):
@@ -964,7 +977,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note: the roll/pitch/yaw value is radians if return_is_radian is True, else °
 
 
-#### def __get_ft_senfor_config__(self):
+#### def __get_ft_sensor_config__(self):
 
 > Get the config of the Six-axis Force Torque Sensor  
 > Note:  
@@ -1100,7 +1113,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :return: True/False
 
 
-#### def __get_joint_states__(self, is_radian=None):
+#### def __get_joint_states__(self, is_radian=None, num=3):
 
 > Get the joint states  
 > Note:  
@@ -1340,7 +1353,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;safe_level: safe level
 
 
-#### def __get_servo_angle__(self, servo_id=None, is_radian=None):
+#### def __get_servo_angle__(self, servo_id=None, is_radian=None, is_real=False):
 
 > Get the servo angle  
 > Note:  
@@ -1473,13 +1486,20 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
 
-#### def __getset_tgpio_modbus_data__(self, datas, min_res_len=0, host_id=9):
+#### def __getset_tgpio_modbus_data__(self, datas, min_res_len=0, host_id=9, is_transparent_transmission=False, use_503_port=False, **kwargs):
 
 > Send the modbus data to the tool gpio  
 >   
 > :param datas: data_list  
 > :param min_res_len: the minimum length of modbus response data. Used to check the data length, if not specified, no check  
 > :param host_id: host_id, default is 9 (TGPIO_HOST_ID)  
+> &ensp;&ensp;&ensp;&ensp;9: END RS485  
+> &ensp;&ensp;&ensp;&ensp;10: CONTROLLER RS485  
+> :param is_transparent_transmission: whether to choose transparent transmission, default is False  
+> &ensp;&ensp;&ensp;&ensp;Note: only available if firmware_version >= 1.11.0  
+> :param use_503_port: whether to use port 503 for communication, default is False  
+> &ensp;&ensp;&ensp;&ensp;Note: if it is True, it will connect to 503 port for communication when it is used for the first time, which is generally only useful for transparent transmission.  
+> &ensp;&ensp;&ensp;&ensp;Note: only available if firmware_version >= 1.11.0  
 >   
 > :return: tuple((code, modbus_response))  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
@@ -1500,12 +1520,14 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;-1: failure
 
 
-#### def __iden_tcp_load__(self):
+#### def __iden_tcp_load__(self, estimated_mass=0):
 
 > Identification the tcp load with current  
 > Note:  
 > &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.8.0  
 >   
+> :param estimated_mass: estimated mass  
+> &ensp;&ensp;&ensp;&ensp;Note: this parameter is only available on the lite6 model manipulator, and this parameter must be specified for the lite6 model manipulator  
 > :return: tuple((code, load)) only when code is 0, the returned result is correct.  
 > &ensp;&ensp;&ensp;&ensp;code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
 > &ensp;&ensp;&ensp;&ensp;load:  [mass，x_centroid，y_centroid，z_centroid]
@@ -1582,7 +1604,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param wait: whether to wait for the arm to complete, default is False
 
 
-#### def __move_circle__(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):
+#### def __move_circle__(self, pose1, pose2, percent, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, is_tool_coord=False, is_axis_angle=False, **kwargs):
 
 > The motion calculates the trajectory of the space circle according to the three-point coordinates.  
 > The three-point coordinates are (current starting point, pose1, pose2).  
@@ -1596,6 +1618,8 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param is_radian: roll/pitch/yaw value is radians or not, default is self.default_is_radian  
 > :param wait: whether to wait for the arm to complete, default is False  
 > :param timeout: maximum waiting time(unit: second), default is None(no timeout), only valid if wait is True  
+> :param is_tool_coord: is tool coord or not, default is False, only available if firmware_version >= 1.11.100  
+> :param is_axis_angle: is axis angle or not, default is False, only available if firmware_version >= 1.11.100  
 > :param kwargs: reserved  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
@@ -1631,6 +1655,17 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param speed: speed value, default is 0 (not set the speed)  
 > :param wait: whether to wait for the bio gripper motion complete, default is True  
 > :param timeout: maximum waiting time(unit: second), default is 5, only available if wait=True  
+>   
+> :return: code  
+> &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+
+
+#### def __open_lite6_gripper__(self):
+
+> Open the gripper of Lite6 series robotic arms  
+> Note:  
+> &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.10.0  
+> &ensp;&ensp;&ensp;&ensp;2. this API can only be used on Lite6 series robotic arms  
 >   
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
@@ -2566,7 +2601,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
 
-#### def __set_mode__(self, mode=0):
+#### def __set_mode__(self, mode=0, detection_param=0):
 
 > Set the xArm mode  
 >   
@@ -2580,6 +2615,14 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;3: cartesian teaching mode (invalid)  
 > &ensp;&ensp;&ensp;&ensp;4: joint velocity control mode  
 > &ensp;&ensp;&ensp;&ensp;5: cartesian velocity control mode  
+> &ensp;&ensp;&ensp;&ensp;6: joint online trajectory planning mode   
+> &ensp;&ensp;&ensp;&ensp;7: cartesian online trajectory planning mode   
+> :param detection_param: Teaching detection parameters, default is 0  
+> &ensp;&ensp;&ensp;&ensp;0: Turn on motion detection   
+> &ensp;&ensp;&ensp;&ensp;1: Turn off motion detection  
+> &ensp;&ensp;&ensp;&ensp;Note:  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.10.1  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2. only available if set_mode(2)  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
@@ -2603,11 +2646,47 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 
 #### def __set_only_check_type__(self, only_check_type=0):
 
-> Reversed, no description, please do not use   
+> Set the motion process detection type (valid for all motion interfaces of the current SDK instance)  
+>   
 > Note:  
-> &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.10.0  
-> &ensp;&ensp;&ensp;&ensp;  
-> :param only_check_type:   
+> &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;2. This interface is a global configuration item of the current SDK, and affects all motion-related interfaces  
+> &ensp;&ensp;&ensp;&ensp;3. Generally, you only need to call when you don't want to move the robotic arm and only check whether some paths will have self-collision/angle-limit/cartesian-limit/overspeed.  
+> &ensp;&ensp;&ensp;&ensp;4. Currently only self-collision/angle-limit/cartesian-limit/overspeed are detected  
+> &ensp;&ensp;&ensp;&ensp;5. If only_check_type is set to be greater than 0, and the return value of calling the motion interface is not 0, you can view arm.only_check_result to view the specific error code  
+>   
+> Example: (Common scenarios, here is an example of the set_position interface)  
+> &ensp;&ensp;&ensp;&ensp;1. Check whether the process from point A to point B is normal (no self-collision and overspeed triggered)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1.1 Move to point A  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(0)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(A)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1.2 Check if the process from point A to point B is normal (no self-collision and overspeed triggered)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(1)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(B)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;# If code is not equal to 0, it means that the path does not pass. You can check the specific error code through arm.only_check_result  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(0)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  
+> &ensp;&ensp;&ensp;&ensp;2. Check whether the process from point A to point B, C, and D to point E is normal (no self-collision and overspeed are triggered)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2.1 Move to point A  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(0)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(A)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2.2 Check whether the process of point A passing through points B, C, D to point E is normal (no self-collision and overspeed are triggered)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(3)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(B)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;# If code is not equal to 0, it means that the path does not pass. You can check the specific error code through arm.only_check_result  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(C)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;# If code is not equal to 0, it means that the path does not pass. You can check the specific error code through arm.only_check_result  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(D)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;# If code is not equal to 0, it means that the path does not pass. You can check the specific error code through arm.only_check_result  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code = arm.set_position(E)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;# If code is not equal to 0, it means that the path does not pass. You can check the specific error code through arm.only_check_result  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;arm.set_only_check_type(0)  
+>   
+> :param only_check_type: Motion Detection Type  
+> &ensp;&ensp;&ensp;&ensp;only_check_type == 0: Restore the original function of the motion interface, it will move, the default is 0  
+> &ensp;&ensp;&ensp;&ensp;only_check_type == 1: Only check the self-collision without moving, take the actual state of the manipulator as the initial planned path, and check whether the path has self-collision (the intermediate state will be updated at this time)  
+> &ensp;&ensp;&ensp;&ensp;only_check_type == 2: Only check the self-collision without moving, use the intermediate state as the starting planning path, check whether the path has self-collision (the intermediate state will be updated at this time), and restore the intermediate state to the actual state after the end  
+> &ensp;&ensp;&ensp;&ensp;only_check_type == 3: Only check the self-collision without moving, use the intermediate state as the starting planning path, and check whether the path has self-collision (the intermediate state will be updated at this time)  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
@@ -2653,14 +2732,25 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param is_radian: the roll/pitch/yaw in radians or not, default is self.default_is_radian  
 > :param wait: whether to wait for the arm to complete, default is False  
 > :param timeout: maximum waiting time(unit: second), default is None(no timeout), only valid if wait is True  
-> :param kwargs: reserved  
+> :param kwargs: extra parameters  
+> &ensp;&ensp;&ensp;&ensp;:param motion_type: motion planning type, default is 0  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 0: default, linear planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 1: prioritize linear planning, and turn to IK for joint planning when linear planning is not possible  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 2: direct transfer to IK using joint planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note:   
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2. when motion_type is 1 or 2, linear motion cannot be guaranteed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;3. once IK is transferred to joint planning, the given Cartesian velocity and acceleration are converted into joint velocity and acceleration according to the percentage  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;speed = speed / max_tcp_speed * max_joint_speed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;mvacc = mvacc / max_tcp_acc * max_joint_acc  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;4. if there is no suitable IK, a C40 error will be triggered  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
 > &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code < 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will not be modified  
 > &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code >= 0: the last_used_position/last_used_tcp_speed/last_used_tcp_acc will be modified
 
 
-#### def __set_position_aa__(self, axis_angle_pose, speed=None, mvacc=None, mvtime=None, is_radian=None, is_tool_coord=False, relative=False, wait=False, timeout=None, **kwargs):
+#### def __set_position_aa__(self, axis_angle_pose, speed=None, mvacc=None, mvtime=None, is_radian=None, is_tool_coord=False, relative=False, wait=False, timeout=None, radius=None, **kwargs):
 
 > Set the pose represented by the axis angle pose  
 >   
@@ -2669,10 +2759,29 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param mvacc: move acceleration (mm/s^2, rad/s^2), default is self.last_used_tcp_acc  
 > :param mvtime: 0, reserved   
 > :param is_radian: the rx/ry/rz of axis_angle_pose in radians or not, default is self.default_is_radian  
-> :param is_tool_coord: is tool coordinate or not  
+> :param is_tool_coord: is tool coordinate or not, if it is True, the relative parameter is no longer valid  
 > :param relative: relative move or not  
 > :param wait: whether to wait for the arm to complete, default is False  
 > :param timeout: maximum waiting time(unit: second), default is None(no timeout), only valid if wait is True  
+> :param radius: move radius, if radius is None or radius less than 0, will MoveLineAA, else MoveArcLineAA  
+> &ensp;&ensp;&ensp;&ensp;only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;MoveLineAA: Linear motion  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ex: code = arm.set_position_aa(..., radius=None)  
+> &ensp;&ensp;&ensp;&ensp;MoveArcLineAA: Linear arc motion with interpolation  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ex: code = arm.set_position_aa(..., radius=0)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note: Need to set radius>=0  
+> :param kwargs: extra parameters  
+> &ensp;&ensp;&ensp;&ensp;:param motion_type: motion planning type, default is 0  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 0: default, linear planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 1: prioritize linear planning, and turn to IK for joint planning when linear planning is not possible  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 2: direct transfer to IK using joint planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note:   
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2. when motion_type is 1 or 2, linear motion cannot be guaranteed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;3. once IK is transferred to joint planning, the given Cartesian velocity and acceleration are converted into joint velocity and acceleration according to the percentage  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;speed = speed / max_tcp_speed * max_joint_speed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;mvacc = mvacc / max_tcp_acc * max_joint_acc  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;4. if there is no suitable IK, a C40 error will be triggered  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
@@ -3020,11 +3129,13 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
 
 
-#### def __set_tgpio_modbus_timeout__(self, timeout):
+#### def __set_tgpio_modbus_timeout__(self, timeout, is_transparent_transmission=False, **kwargs):
 
 > Set the modbus timeout of the tool gpio  
 >   
-> :param timeout: timeout, seconds  
+> :param timeout: timeout, milliseconds  
+> :param is_transparent_transmission: whether the set timeout is the timeout of transparent transmission  
+> &ensp;&ensp;&ensp;&ensp;Note: only available if firmware_version >= 1.11.0  
 >   
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
@@ -3037,7 +3148,7 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param timeout: seconds
 
 
-#### def __set_tool_position__(self, x=0, y=0, z=0, roll=0, pitch=0, yaw=0, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, **kwargs):
+#### def __set_tool_position__(self, x=0, y=0, z=0, roll=0, pitch=0, yaw=0, speed=None, mvacc=None, mvtime=None, is_radian=None, wait=False, timeout=None, radius=None, **kwargs):
 
 > Movement relative to the tool coordinate system  
 > Note:  
@@ -3058,7 +3169,25 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > :param is_radian: the roll/pitch/yaw in radians or not, default is self.default_is_radian  
 > :param wait: whether to wait for the arm to complete, default is False  
 > :param timeout: maximum waiting time(unit: second), default is None(no timeout), only valid if wait is True  
-> :param kwargs: reserved  
+> :param radius: move radius, if radius is None or radius less than 0, will MoveToolLine, else MoveToolArcLine  
+> &ensp;&ensp;&ensp;&ensp;only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;MoveToolLine: Linear motion  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ex: code = arm.set_tool_position(..., radius=None)  
+> &ensp;&ensp;&ensp;&ensp;MoveToolArcLine: Linear arc motion with interpolation  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ex: code = arm.set_tool_position(..., radius=0)  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note: Need to set radius>=0  
+> :param kwargs: extra parameters  
+> &ensp;&ensp;&ensp;&ensp;:param motion_type: motion planning type, default is 0  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 0: default, linear planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 1: prioritize linear planning, and turn to IK for joint planning when linear planning is not possible  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;motion_type == 2: direct transfer to IK using joint planning  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Note:   
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.11.100  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2. when motion_type is 1 or 2, linear motion cannot be guaranteed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;3. once IK is transferred to joint planning, the given Cartesian velocity and acceleration are converted into joint velocity and acceleration according to the percentage  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;speed = speed / max_tcp_speed * max_joint_speed  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;mvacc = mvacc / max_tcp_acc * max_joint_acc  
+> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;4. if there is no suitable IK, a C40 error will be triggered  
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.  
 > &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;code < 0: the last_used_tcp_speed/last_used_tcp_acc will not be modified  
@@ -3108,6 +3237,17 @@ xArm-Python-SDK API Documentation: class XArmAPI in module xarm.wrapper.xarm_api
 > Note:  
 > &ensp;&ensp;&ensp;&ensp;1. This interface relies on Firmware 1.2.0 or above  
 > &ensp;&ensp;&ensp;&ensp;2. set joint teaching mode: set_mode(2);set_state(0)  
+>   
+> :return: code  
+> &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+
+
+#### def __stop_lite6_gripper__(self):
+
+> Stop the gripper of Lite6 series robotic arms  
+> Note:  
+> &ensp;&ensp;&ensp;&ensp;1. only available if firmware_version >= 1.10.0  
+> &ensp;&ensp;&ensp;&ensp;2. this API can only be used on Lite6 series robotic arms  
 >   
 > :return: code  
 > &ensp;&ensp;&ensp;&ensp;code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.

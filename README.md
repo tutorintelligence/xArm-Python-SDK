@@ -29,6 +29,27 @@ Install is not necessary, you can run examples without installation.Only Python3
 - #### [API Code Document](doc/api/xarm_api_code.md)
 
 ## Update Summary
+- > ### 1.11.6
+  - Correct the ambiguity that the `set_position_aa` interface is true when both relative and is_tool_coord are true. After the correction, when is_tool_coord is true, relative is invalid (previously is_tool_coord was invalid when relative was true)
+
+- > ### 1.11.5
+  - Optimization pause time is too long (wait=true)
+  - Add common motion api (Enabled after firmware version 1.11.100)
+  - The Cartesian motion-related interface adds the motion_type parameter to determine the planning method (Enabled after firmware version 1.11.100)
+
+- > ### 1.11.0
+  - Support transparent transmission
+    - 240: `set_tgpio_modbus_timeout(..., is_transparent_transmission=True)`
+    - 241: `getset_tgpio_modbus_data(..., is_transparent_transmission=True)`
+  - Modified the centroid unit of the `ft_sensor_iden_load` and `ft_sensor_cali_load` interfaces to millimeters (originally meters)
+
+- > ### 1.10.0
+  - Use monotonic time
+  - Fix several bugs
+  
+- > ### 1.9.10
+  - Support Lite6 Model
+  - Fix several bugs
 
 - > ### 1.9.0
   - Support friction parameter identification interface
@@ -85,11 +106,15 @@ __Note: Before running the example, please modify the ip value in the [robot.con
 
 - #####  [1007-counter](example/wrapper/common/1007-counter.py)
 
-- [__1008-move_line_aa__](example/wrapper/common/1008-move_line_aa.py)
+- #####  [1008-move_line_aa](example/wrapper/common/1008-move_line_aa.py)
 
-- [__1009-cartesian_velocity_control__](example/wrapper/common/1009-cartesian_velocity_control.py)
+- #####  [1009-cartesian_velocity_control](example/wrapper/common/1009-cartesian_velocity_control.py)
 
-- [__2000-joint_velocity_control__](example/wrapper/common/2000-joint_velocity_control.py)
+- #####  [1010-cartesian_online_trajectory_planning](example/wrapper/common/1010-cartesian_online_trajectory_planning.py)
+
+- #####  [2000-joint_velocity_control](example/wrapper/common/2000-joint_velocity_control.py)
+  
+- #####  [2006-joint_online_trajectory_planning](example/wrapper/common/2006-joint_online_trajectory_planning.py)
 
 - ##### 2001-move_joint --> [xarm5](example/wrapper/xarm5/2001-move_joint.py) --- [xarm6](example/wrapper/xarm6/2001-move_joint.py) --- [xarm7](example/wrapper/xarm7/2001-move_joint.py)
 

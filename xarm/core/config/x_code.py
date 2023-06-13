@@ -734,6 +734,16 @@ ControllerErrorCodeMap = {
             'desc': '请联系技术支持。'
         }
     },
+    40: {
+        'en': {
+            'title': 'No IK available',
+            'desc': ''
+        },
+        'cn': {
+            'title': '没有可用的IK',
+            'desc': ''
+        }
+    },
     50: {
         'en': {
             'title': 'Six-axis Force Torque Sensor read error',
@@ -1349,7 +1359,7 @@ class ServoError(BaseCode):
 
 class GripperError(BaseCode):
     def __init__(self, code, status=0):
-        self._code_map = GripperError
+        self._code_map = GripperErrorCodeMap
         super(GripperError, self).__init__(code, status=status)
 
 
