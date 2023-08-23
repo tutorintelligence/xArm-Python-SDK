@@ -10,6 +10,8 @@ import re
 import sys
 import time
 import math
+import uuid
+import queue
 import threading
 try:
     from multiprocessing.pool import ThreadPool
@@ -28,7 +30,11 @@ if not hasattr(math, 'inf'):
     setattr(math, 'inf', float('inf'))
 from .events import Events
 from ..core.config.x_config import XCONF
-from ..core.comm import SerialPort, SocketPort
+from ..core.comm import SocketPort
+try:
+    from ..core.comm import SerialPort
+except:
+    SerialPort = None 
 from ..core.wrapper import UxbusCmdSer, UxbusCmdTcp
 from ..core.utils.log import logger, pretty_print
 from ..core.utils import convert
@@ -226,6 +232,13 @@ class Base(BaseObject, Events):
 
             self._has_motion_cmd = False
             self._need_sync = False
+
+            self._support_feedback = False
+            self._feedback_que = queue.Queue()
+            self._feedback_thread = None
+            self._fb_key_transid_map = {}
+            self._fb_transid_type_map = {}
+            self._fb_transid_result_map = {}
 
             if not do_not_open:
                 self.connect()
@@ -475,6 +488,10 @@ class Base(BaseObject, Events):
     @property
     def is_lite6(self):
         return self.axis == 6 and self.device_type == 9
+        
+    @property
+    def is_850(self):
+        return self.axis == 6 and self.device_type == 12
 
     @property
     def version(self):
@@ -711,6 +728,10 @@ class Base(BaseObject, Events):
     @property
     def ft_raw_force(self):
         return self._ft_raw_force
+    
+    @property
+    def support_feedback(self):
+        return self._support_feedback
 
     def version_is_ge(self, major, minor=0, revision=0):
         if self._version is None:
@@ -783,7 +804,7 @@ class Base(BaseObject, Events):
             heartbeat=self._enable_heartbeat, buffer_size=XCONF.SocketConf.TCP_CONTROL_BUF_SIZE, forbid_uds=self._forbid_uds)
         if not self.connected_503:
             return -1
-        self.arm_cmd_503 = UxbusCmdTcp(self._stream_503)
+        self.arm_cmd_503 = UxbusCmdTcp(self._stream_503, set_feedback_key_tranid=self._set_feedback_key_tranid)
         self.arm_cmd_503.set_debug(self._debug)
         return 0
 
@@ -816,14 +837,16 @@ class Base(BaseObject, Events):
                     self._port):
                 self._stream = SocketPort(self._port, XCONF.SocketConf.TCP_CONTROL_PORT,
                                           heartbeat=self._enable_heartbeat,
-                                          buffer_size=XCONF.SocketConf.TCP_CONTROL_BUF_SIZE, forbid_uds=self._forbid_uds)
+                                          buffer_size=XCONF.SocketConf.TCP_CONTROL_BUF_SIZE, forbid_uds=self._forbid_uds, fb_que=self._feedback_que)
                 if not self.connected:
                     raise Exception('connect socket failed')
 
                 self._report_error_warn_changed_callback()
+                self._feedback_thread = threading.Thread(target=self._feedback_thread_handle, daemon=True)
+                self._feedback_thread.start()
 
-                self.arm_cmd = UxbusCmdTcp(self._stream)
-                self.arm_cmd.set_prot_flag(2)
+                self.arm_cmd = UxbusCmdTcp(self._stream, set_feedback_key_tranid=self._set_feedback_key_tranid)
+                self.arm_cmd.set_protocol_identifier(2)
                 self._stream_type = 'socket'
 
                 try:
@@ -843,6 +866,7 @@ class Base(BaseObject, Events):
                 if self._check_version(is_first=True) < 0:
                     self.disconnect()
                     raise Exception('failed to check version, close')
+                self._support_feedback = self.version_is_ge(2, 0, 102)
                 self.arm_cmd.set_debug(self._debug)
 
                 if self._max_callback_thread_count < 0 and asyncio is not None:
@@ -1122,7 +1146,7 @@ class Base(BaseObject, Events):
     def _report_thread_handle(self):
         main_socket_connected = self.connected
         report_socket_connected = self.reported
-        prot_flag = 2
+        protocol_identifier = 2
         last_send_time = 0
         max_reconnect_cnts = 10
         connect_failed_cnt = 0
@@ -1131,9 +1155,9 @@ class Base(BaseObject, Events):
             try:
                 curr_time = time.monotonic()
                 if self._keep_heart:
-                    if prot_flag != 3 and self.version_is_ge(1, 8, 6) and self.arm_cmd.set_prot_flag(3) == 0:
-                        prot_flag = 3
-                    if prot_flag == 3 and curr_time - last_send_time > 10 and curr_time - self.arm_cmd.last_comm_time > 30:
+                    if protocol_identifier != 3 and self.version_is_ge(1, 8, 6) and self.arm_cmd.set_protocol_identifier(3) == 0:
+                        protocol_identifier = 3
+                    if protocol_identifier == 3 and curr_time - last_send_time > 10 and curr_time - self.arm_cmd.last_comm_time > 30:
                         code, _ = self.get_state()
                         # print('send heartbeat, code={}'.format(code))
                         if code >= 0:
@@ -1149,9 +1173,9 @@ class Base(BaseObject, Events):
                     self._connect_report()
                     if not self.reported:
                         connect_failed_cnt += 1
-                        if self.connected and (connect_failed_cnt <= max_reconnect_cnts or prot_flag == 3):
+                        if self.connected and (connect_failed_cnt <= max_reconnect_cnts or protocol_identifier == 3):
                             time.sleep(2)
-                        elif not self.connected or prot_flag == 2:
+                        elif not self.connected or protocol_identifier == 2:
                             logger.error('report thread is break, connected={}, failed_cnts={}'.format(self.connected, connect_failed_cnt))
                             break
                         continue
@@ -2195,14 +2219,69 @@ class Base(BaseObject, Events):
         self.log_api_info('API -> motion_enable -> code={}'.format(ret[0]), code=ret[0])
         return ret[0]
     
-    def wait_move(self, timeout=None):
+    def _gen_feedback_key(self, wait, **kwargs):
+        feedback_key = kwargs.get('feedback_key', '') if self._support_feedback and not wait else ''
+        studio_wait = bool(feedback_key)
+        feedback_key = str(uuid.uuid1()) if wait and self._support_feedback else feedback_key
+        # feedback_key = str(uuid.uuid1()) if wait and self._support_feedback else ''
+        self._fb_key_transid_map[feedback_key if feedback_key else 'no_use'] = -1
+        return feedback_key, studio_wait
+    
+    def _get_feedback_transid(self, feedback_key, studio_wait=False):
+        return self._fb_key_transid_map.pop(feedback_key, -1) if not studio_wait else -1
+    
+    def _set_feedback_key_tranid(self, feedback_key, trans_id, feedback_type=0):
+        self._fb_key_transid_map[feedback_key] = trans_id
+        self._fb_transid_type_map[trans_id] = feedback_type
+        self._fb_transid_result_map.pop(trans_id, -1)
+    
+    def _wait_feedback(self, timeout=None, trans_id=-1, ignore_log=False):
+        if timeout is not None:
+            expired = time.monotonic() + timeout + (self._sleep_finish_time if self._sleep_finish_time > time.monotonic() else 0)
+        else:
+            expired = 0
+        state5_cnt = 0
+        while timeout is None or time.monotonic() < expired:
+            if not self.connected:
+                self._fb_transid_result_map.clear()
+                if not ignore_log:
+                    self.log_api_info('wait_feedback, xarm is disconnect', code=APIState.NOT_CONNECTED)
+                return APIState.NOT_CONNECTED, -1
+            if self.error_code != 0:
+                self._fb_transid_result_map.clear()
+                if not ignore_log:
+                    self.log_api_info('wait_feedback, xarm has error, error={}'.format(self.error_code), code=APIState.HAS_ERROR)
+                return APIState.HAS_ERROR, -1
+            code, state = self.get_state()
+            if code != 0:
+                return code, -1
+            if state >= 4:
+                self._sleep_finish_time = 0
+                if state == 5:
+                    state5_cnt += 1
+                if state != 5 or state5_cnt >= 20:
+                    self._fb_transid_result_map.clear()
+                    if not ignore_log:
+                        self.log_api_info('wait_feedback, xarm is stop, state={}'.format(state), code=APIState.EMERGENCY_STOP)
+                    return APIState.EMERGENCY_STOP, -1
+            else:
+                state5_cnt = 0
+            if trans_id in self._fb_transid_result_map:
+                return 0, self._fb_transid_result_map.pop(trans_id, -1)
+            time.sleep(0.05)
+        return APIState.WAIT_FINISH_TIMEOUT, -1
+    
+    def wait_move(self, timeout=None, trans_id=-1):
+        if self._support_feedback and trans_id > 0:
+            return self._wait_feedback(timeout, trans_id)[0]
         if timeout is not None:
             expired = time.monotonic() + timeout + (self._sleep_finish_time if self._sleep_finish_time > time.monotonic() else 0)
         else:
             expired = 0
         _, state = self.get_state()
         cnt = 0
-        max_cnt = 1 if _ == 0 and state == 1 else 10
+        state5_cnt = 0
+        max_cnt = 2 if _ == 0 and state == 1 else 10
         while timeout is None or time.monotonic() < expired:
             if not self.connected:
                 self.log_api_info('wait_move, xarm is disconnect', code=APIState.NOT_CONNECTED)
@@ -2210,21 +2289,26 @@ class Base(BaseObject, Events):
             if self.error_code != 0:
                 self.log_api_info('wait_move, xarm has error, error={}'.format(self.error_code), code=APIState.HAS_ERROR)
                 return APIState.HAS_ERROR
-            if self.mode != 0:
+            if self.mode != 0 and self.mode != 11:
                 return 0
             code, state = self.get_state()
             if code != 0:
                 return code
             if state >= 4:
                 self._sleep_finish_time = 0
-                self.log_api_info('wait_move, xarm is stop, state={}'.format(state), code=APIState.EMERGENCY_STOP)
-                return APIState.EMERGENCY_STOP
+                if state == 5:
+                    state5_cnt += 1
+                if state != 5 or state5_cnt >= 20:
+                    self.log_api_info('wait_move, xarm is stop, state={}'.format(state), code=APIState.EMERGENCY_STOP)
+                    return APIState.EMERGENCY_STOP
+            else:
+                state5_cnt = 0
             if time.monotonic() < self._sleep_finish_time or state == 3:
                 cnt = 0
                 max_cnt = 2 if state == 3 else max_cnt
                 time.sleep(0.05)
                 continue
-            if state == 1:
+            if state == 0 or state == 1:
                 cnt = 0
                 max_cnt = 2
                 time.sleep(0.05)
@@ -2235,57 +2319,6 @@ class Base(BaseObject, Events):
                     return 0
                 time.sleep(0.05)
         return APIState.WAIT_FINISH_TIMEOUT
-
-    # def wait_move(self, timeout=None):
-    #     if timeout is not None:
-    #         expired = time.monotonic() + timeout + (self._sleep_finish_time if self._sleep_finish_time > time.monotonic() else 0)
-    #     else:
-    #         expired = 0
-    #     count = 0
-    #     _, state = self.get_state()
-    #     max_cnt = 4 if _ == 0 and state == 1 else 10
-    #     while timeout is None or time.monotonic() < expired:
-    #         if not self.connected:
-    #             self.log_api_info('wait_move, xarm is disconnect', code=APIState.NOT_CONNECTED)
-    #             return APIState.NOT_CONNECTED
-    #         if not self._enable_report or (time.monotonic() - self._last_report_time > 0.4):
-    #             self.get_state()
-    #             self.get_err_warn_code()
-    #         if self.error_code != 0:
-    #             self.log_api_info('wait_move, xarm has error, error={}'.format(self.error_code), code=APIState.HAS_ERROR)
-    #             return APIState.HAS_ERROR
-    #         # only wait in position mode
-    #         if self.mode != 0:
-    #             return 0
-    #         if self.is_stop:
-    #             _, state = self.get_state()
-    #             if _ != 0 or state not in [4, 5]:
-    #                 time.sleep(0.02)
-    #                 continue
-    #             self._sleep_finish_time = 0
-    #             self.log_api_info('wait_move, xarm is stop, state={}'.format(self.state), code=APIState.EMERGENCY_STOP)
-    #             return APIState.EMERGENCY_STOP
-    #         if time.monotonic() < self._sleep_finish_time or self.state == 3:
-    #             time.sleep(0.02)
-    #             count = 0
-    #             continue
-    #         if self.state != 1:
-    #             count += 1
-    #             if count >= max_cnt:
-    #                 _, state = self.get_state()
-    #                 self.get_err_warn_code()
-    #                 if _ == 0 and state != 1:
-    #                     return 0
-    #                 else:
-    #                     count = 0
-    #             #     return 0
-    #             # if count % 4 == 0:
-    #             #     self.get_state()
-    #             #     self.get_err_warn_code()
-    #         else:
-    #             count = 0
-    #         time.sleep(0.05)
-    #     return APIState.WAIT_FINISH_TIMEOUT
 
     @xarm_is_connected(_type='set')
     def _check_modbus_code(self, ret, length=2, only_check_code=False, host_id=XCONF.TGPIO_HOST_ID):
@@ -2434,14 +2467,55 @@ class Base(BaseObject, Events):
     @xarm_wait_until_not_pause
     @xarm_wait_until_cmdnum_lt_max
     @xarm_is_ready(_type='set')
-    def set_tcp_load(self, weight, center_of_gravity):
+    def set_tcp_load(self, weight, center_of_gravity, wait=False, **kwargs):
         if compare_version(self.version_number, (0, 2, 0)):
             _center_of_gravity = center_of_gravity
         else:
             _center_of_gravity = [item / 1000.0 for item in center_of_gravity]
-        ret = self.arm_cmd.set_tcp_load(weight, _center_of_gravity)
+        feedback_key, studio_wait = self._gen_feedback_key(wait, **kwargs)
+        ret = self.arm_cmd.set_tcp_load(weight, _center_of_gravity, feedback_key=feedback_key)
+        trans_id = self._get_feedback_transid(feedback_key, studio_wait)
+        ret[0] = self._check_code(ret[0], is_move_cmd=True)
         self.log_api_info('API -> set_tcp_load -> code={}, weight={}, center={}'.format(ret[0], weight, _center_of_gravity), code=ret[0])
+        if wait and ret[0] == 0:
+            return self.wait_move(None, trans_id=trans_id)
         return ret[0]
 
     def set_only_check_type(self, only_check_type):
         self._only_check_type = only_check_type if only_check_type in [0, 1, 2, 3] else 0
+
+    def get_dh_params(self):
+        ret = self.arm_cmd.get_dh_params()
+        ret[0] = self._check_code(ret[0])
+        return ret[0], ret[1:]
+    
+    def set_dh_params(self, dh_params, flag=0):
+        if len(dh_params) < 28:
+            dh_params.extend([0] * (28 - len(dh_params)))
+        ret = self.arm_cmd.set_dh_params(dh_params, flag)
+        ret[0] = self._check_code(ret[0])
+        return ret[0]
+    
+    def _feedback_thread_handle(self):
+        while self.connected:
+            try:
+                data = self._feedback_que.get(timeout=1)
+            except:
+                continue
+            self._feedback_callback(data)
+    
+    def _feedback_callback(self, data):
+        trans_id = convert.bytes_to_u16(data[0:2])
+        feedback_type = self._fb_transid_type_map.pop(trans_id, -1)
+        if feedback_type != -1:
+            self._fb_transid_result_map[trans_id] = data[12]  # feedback_code
+        if feedback_type & data[8] == 0:
+            return
+        self.__report_callback(self.FEEDBACK_ID, data, name='feedback')
+    
+    def set_feedback_type(self, feedback_type):
+        if not self._support_feedback:
+            return APIState.CMD_NOT_EXIST
+        ret = self.arm_cmd.set_feedback_type(feedback_type)
+        ret[0] = self._check_code(ret[0])
+        return ret[0]
