@@ -100,6 +100,7 @@ class XArmAPI(object):
             'get_suction_cup': self.get_vacuum_gripper,
             'set_suction_cup': self.set_vacuum_gripper,
             'get_ft_senfor_config': self.get_ft_sensor_config,
+            'shutdown_system': self.system_control,
         }
 
     def __getattr__(self, item):
@@ -414,6 +415,8 @@ class XArmAPI(object):
             3: cartesian teaching mode (invalid)
             4: joint velocity control mode
             5: cartesian velocity control mode
+            6: joint online trajectory planning mode 
+            7: cartesian online trajectory planning mode 
         """
         return self._arm.mode
 
@@ -1101,15 +1104,15 @@ class XArmAPI(object):
         """
         return self._arm.check_verification()
 
-    def shutdown_system(self, value=1):
+    def system_control(self, value=1):
         """
-        Shutdown the xArm controller system
+        Control the xArm controller system
 
-        :param value: 1: remote shutdown
+        :param value: 1: shutdown, 2: reboot
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.shutdown_system(value=value)
+        return self._arm.system_control(value=value)
 
     def get_trajectories(self):
         """
@@ -1141,7 +1144,7 @@ class XArmAPI(object):
         """
         return self._arm.start_record_trajectory()
 
-    def stop_record_trajectory(self, filename=None):
+    def stop_record_trajectory(self, filename=None, **kwargs):
         """
         Stop trajectory recording
 
@@ -1157,9 +1160,9 @@ class XArmAPI(object):
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.stop_record_trajectory(filename=filename)
+        return self._arm.stop_record_trajectory(filename=filename, **kwargs)
 
-    def save_record_trajectory(self, filename, wait=True, timeout=2):
+    def save_record_trajectory(self, filename, wait=True, timeout=5, **kwargs):
         """
         Save the trajectory you just recorded
 
@@ -1176,9 +1179,9 @@ class XArmAPI(object):
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.save_record_trajectory(filename, wait=wait, timeout=timeout)
+        return self._arm.save_record_trajectory(filename, wait=wait, timeout=timeout, **kwargs)
 
-    def load_trajectory(self, filename, wait=True, timeout=10):
+    def load_trajectory(self, filename, wait=True, timeout=None, **kwargs):
         """
         Load the trajectory
 
@@ -1191,9 +1194,9 @@ class XArmAPI(object):
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.load_trajectory(filename, wait=wait, timeout=timeout)
+        return self._arm.load_trajectory(filename, wait=wait, timeout=timeout, **kwargs)
 
-    def playback_trajectory(self, times=1, filename=None, wait=True, double_speed=1):
+    def playback_trajectory(self, times=1, filename=None, wait=True, double_speed=1, **kwargs):
         """
         Playback trajectory
 
@@ -1209,7 +1212,7 @@ class XArmAPI(object):
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.playback_trajectory(times=times, filename=filename, wait=wait, double_speed=double_speed)
+        return self._arm.playback_trajectory(times=times, filename=filename, wait=wait, double_speed=double_speed, **kwargs)
 
     def get_trajectory_rw_status(self):
         """
@@ -1369,7 +1372,7 @@ class XArmAPI(object):
         """
         return self._arm.set_collision_rebound(on)
 
-    def set_world_offset(self, offset, is_radian=None):
+    def set_world_offset(self, offset, is_radian=None, wait=True):
         """
         Set the base coordinate offset
 
@@ -1378,10 +1381,11 @@ class XArmAPI(object):
 
         :param offset: [x, y, z, roll, pitch, yaw]
         :param is_radian: the roll/pitch/yaw in radians or not, default is self.default_is_radian
+        :param wait: whether to wait for the robotic arm to stop or all previous queue commands to be executed or cleared before setting
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_world_offset(offset, is_radian=is_radian)
+        return self._arm.set_world_offset(offset, is_radian=is_radian, wait=wait)
 
     def get_is_moving(self):
         """
@@ -1523,7 +1527,7 @@ class XArmAPI(object):
         """
         return self._arm.set_pause_time(sltime, wait=wait)
 
-    def set_tcp_offset(self, offset, is_radian=None, **kwargs):
+    def set_tcp_offset(self, offset, is_radian=None, wait=True, **kwargs):
         """
         Set the tool coordinate system offset at the end
         Note:
@@ -1535,10 +1539,11 @@ class XArmAPI(object):
 
         :param offset: [x, y, z, roll, pitch, yaw]
         :param is_radian: the roll/pitch/yaw in radians or not, default is self.default_is_radian
+        :param wait: whether to wait for the robotic arm to stop or all previous queue commands to be executed or cleared before setting
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_tcp_offset(offset, is_radian=is_radian, **kwargs)
+        return self._arm.set_tcp_offset(offset, is_radian=is_radian, wait=wait, **kwargs)
 
     def set_tcp_jerk(self, jerk):
         """
@@ -1603,7 +1608,7 @@ class XArmAPI(object):
         """
         return self._arm.set_joint_maxacc(acc, is_radian=is_radian)
 
-    def set_tcp_load(self, weight, center_of_gravity):
+    def set_tcp_load(self, weight, center_of_gravity, wait=False, **kwargs):
         """
         Set the end load of xArm
 
@@ -1615,12 +1620,13 @@ class XArmAPI(object):
 
         :param weight: load weight (unit: kg)
         :param center_of_gravity: load center of gravity, such as [x(mm), y(mm), z(mm)]
+        :param wait: whether to wait for the command to be executed or the the robotic arm to stop
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_tcp_load(weight, center_of_gravity)
+        return self._arm.set_tcp_load(weight, center_of_gravity, wait=wait, **kwargs)
 
-    def set_collision_sensitivity(self, value):
+    def set_collision_sensitivity(self, value, wait=True):
         """
         Set the sensitivity of collision
 
@@ -1631,12 +1637,13 @@ class XArmAPI(object):
             4. The clean_conf interface can restore system default settings
 
         :param value: sensitivity value, 0~5
+        :param wait: reversed
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_collision_sensitivity(value)
+        return self._arm.set_collision_sensitivity(value, wait=wait)
 
-    def set_teach_sensitivity(self, value):
+    def set_teach_sensitivity(self, value, wait=True):
         """
         Set the sensitivity of drag and teach
 
@@ -1647,12 +1654,13 @@ class XArmAPI(object):
             4. The clean_conf interface can restore system default settings
 
         :param value: sensitivity value, 1~5
+        :param wait: whether to wait for the robotic arm to stop or all previous queue commands to be executed or cleared before setting
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_teach_sensitivity(value)
+        return self._arm.set_teach_sensitivity(value, wait=wait)
 
-    def set_gravity_direction(self, direction):
+    def set_gravity_direction(self, direction, wait=True):
         """
         Set the direction of gravity
 
@@ -1663,10 +1671,11 @@ class XArmAPI(object):
             4. The clean_conf interface can restore system default settings
 
         :param direction: direction of gravity, such as [x(mm), y(mm), z(mm)]
+        :param wait: whether to wait for the robotic arm to stop or all previous queue commands to be executed or cleared before setting
         :return: code
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
-        return self._arm.set_gravity_direction(direction=direction)
+        return self._arm.set_gravity_direction(direction=direction, wait=wait)
 
     def set_mount_direction(self, base_tilt_deg, rotation_deg, is_radian=None):
         """
@@ -2342,7 +2351,7 @@ class XArmAPI(object):
 
     def get_harmonic_type(self, servo_id=1):
         """
-        Get harmonic type, only for debu
+        Get harmonic type, only for debug
 
         :return: (code, type)
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
@@ -2531,16 +2540,17 @@ class XArmAPI(object):
         """
         return self._arm.get_joints_torque()
 
-    def set_joints_torque(self, joints_torque):
-        """
-        Set joints torque,
-            Warning: If necessary, please do not set it randomly, it may damage the robot arm
+    # This interface is no longer supported
+    # def set_joints_torque(self, joints_torque):
+    #     """
+    #     Set joints torque,
+    #         Warning: If necessary, please do not set it randomly, it may damage the robot arm
 
-        :param joints_torque: 
-        :return: code
-            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
-        """
-        return self._arm.set_joints_torque(joints_torque)
+    #     :param joints_torque: 
+    #     :return: code
+    #         code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+    #     """
+    #     return self._arm.set_joints_torque(joints_torque)
 
     def get_safe_level(self):
         """
@@ -3573,6 +3583,17 @@ class XArmAPI(object):
         """
         return self._arm.set_allow_approx_motion(on_off)
 
+    def get_allow_approx_motion(self):
+        """
+        Obtain whether to enable approximate solutions to avoid certain singularities
+        Note:
+            1. only available if firmware_version >= 1.9.0
+
+        :return: code
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+        """
+        return self._arm.get_allow_approx_motion()
+
     def get_joint_states(self, is_radian=None, num=3):
         """
         Get the joint states
@@ -3686,3 +3707,226 @@ class XArmAPI(object):
             code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
         """
         return self._arm.stop_lite6_gripper()
+
+    def get_dh_params(self):
+        """
+        Get the DH parameters
+        Note:
+            1. only available if firmware_version >= 2.0.0
+        
+        :return: tuple((code, dh_params)), only when code is 0, the returned result is correct.
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            dh_params: DH parameters
+                dh_params[0:4]: DH parameters of Joint-1
+                dh_params[4:8]: DH parameters of Joint-2
+                ...
+                dh_params[24:28]: DH parameters of Joint-7
+        """
+        return self._arm.get_dh_params()
+    
+    def set_dh_params(self, dh_params, flag=0):
+        """
+        Set the DH parameters
+        Note:
+            1. only available if firmware_version >= 2.0.0
+            2. this interface is only provided for users who need to use external DH parameters, ordinary users should not try to modify DH parameters.
+        
+        :param dh_params: DH parameters
+        :param flag: 
+            0: Use the set DH parameters, but do not write to the configuration file
+            1: Use the set DH parameters and write to the configuration file
+            2: Use the set DH parameters and delete the DH parameters of the configuration file
+            3: Use the default DH parameters, but will not delete the DH parameters of the configuration file
+            4: Use the default DH parameters and delete the DH parameters of the configuration file
+        :return: code
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+        """
+        return self._arm.set_dh_params(dh_params, flag)
+
+    def set_feedback_type(self, feedback_type):
+        """
+        Set the feedback type
+        Note:
+            1. only available if firmware_version >= 2.1.0
+            2. only works in position mode
+            3. the setting will only affect subsequent tasks and will not affect previously cached tasks
+            4. only valid for the current connection
+        
+        :param feedback_type:
+            0: disable feedback
+            1: feedback when the motion task starts executing
+            2: feedback when the motion task execution ends or motion task is discarded(usually when the distance is too close to be planned)
+            4: feedback when the non-motion task is triggered
+        :return: code
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+        """
+        return self._arm.set_feedback_type(feedback_type)
+
+    def register_feedback_callback(self, callback=None):
+        """
+        Register the callback of feedback
+        Note:
+            1. only available if firmware_version >= 2.1.0
+
+        :param callback:
+            callback data: bytes data
+                data[0:2]: transaction id, (Big-endian conversion to unsigned 16-bit integer data), command ID corresponding to the feedback, consistent with issued instructions
+                    Note: this can be used to distinguish which instruction the feedback belongs to
+                data[4:6]: feedback_length, feedback_length == len(data) - 6, (Big-endian conversion to unsigned 16-bit integer data)
+                data[8]: feedback type
+                    1: the motion task starts executing
+                    2: the motion task execution ends or motion task is discarded(usually when the distance is too close to be planned)
+                    4: the non-motion task is triggered
+                data[9]: feedback funcode, command code corresponding to feedback, consistent with issued instructions
+                    Note: this can be used to distinguish what instruction the feedback belongs to
+                data[10:12]: feedback taskid, (Big-endian conversion to unsigned 16-bit integer data)
+                data[12]: feedback code, execution status code, generally only meaningful when the feedback type is end, normally 0, 2 means discarded
+                data[13:21]: feedback us, (Big-endian conversion to unsigned 64-bit integer data), time when feedback triggers (microseconds)
+                    Note: this time is the corresponding controller system time when the feedback is triggered
+        :return: True/False
+        """
+        return self._arm.register_feedback_callback(callback=callback)
+
+    def release_feedback_callback(self, callback=None):
+        """
+        Release the callback of feedback
+        Note:
+            1. only available if firmware_version >= 2.1.0
+
+        :param callback:
+        :return: True/False
+        """
+        return self._arm.release_feedback_callback(callback=callback)
+    
+    def read_coil_bits(self, addr, quantity):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Read Coils (0x01)
+        
+        :param addr: the starting address of the register to be read
+        :param quantity: number of registers
+        :return: tuple((code, bits)) only when code is 0, the returned result is correct.
+            code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.read_coil_bits(addr, quantity)
+
+    def read_input_bits(self, addr, quantity):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Read Discrete Inputs (0x02)
+        
+        :param addr: the starting address of the register to be read
+        :param quantity: number of registers
+        :return: tuple((code, bits)) only when code is 0, the returned result is correct.
+            code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.read_input_bits(addr, quantity)
+    
+    def read_holding_registers(self, addr, quantity, is_signed=False):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Read Holding Registers (0x03)
+        
+        :param addr: the starting address of the register to be read
+        :param quantity: number of registers
+        :param is_signed: whether to convert the read register value into a signed form
+        :return: tuple((code, bits)) only when code is 0, the returned result is correct.
+            code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.read_holding_registers(addr, quantity, is_signed)
+    
+    def read_input_registers(self, addr, quantity, is_signed=False):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Read Input Registers (0x04)
+        
+        :param addr: the starting address of the register to be read
+        :param quantity: number of registers
+        :param is_signed: whether to convert the read register value into a signed form
+        :return: tuple((code, bits)) only when code is 0, the returned result is correct.
+            code:  See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.read_input_registers(addr, quantity, is_signed)
+    
+    def write_single_coil_bit(self, addr, bit_val):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Write Single Coil (0x05)
+        
+        :param addr: register address
+        :param bit_val: the value to write (0/1)
+        :return: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.write_single_coil_bit(addr, bit_val)
+    
+    def write_single_holding_register(self, addr, reg_val):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Write Single Holding Register (0x06)
+        
+        :param addr: register address
+        :param bit_val: the value to write
+        :return: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.write_single_holding_register(addr, reg_val)
+
+    def write_multiple_coil_bits(self, addr, bits):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Write Multiple Coils (0x0F)
+        
+        :param addr: the starting address of the register to be written
+        :param bits: array of values to write
+        :return: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.write_multiple_coil_bits(addr, bits)
+
+    def write_multiple_holding_registers(self, addr, regs):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Write Multiple Holding Registers (0x10)
+        
+        :param addr: the starting address of the register to be written
+        :param regs: array of values to write
+        :return: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.write_multiple_holding_registers(addr, regs)
+
+    def mask_write_holding_register(self, addr, and_mask, or_mask):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Mask Write Holding Register (0x16)
+        
+        :param addr: register address
+        :param and_mask: mask to be AND with
+        :param or_mask: mask to be OR with
+        :return: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+            Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.mask_write_holding_register(addr, and_mask, or_mask)
+
+    def write_and_read_holding_registers(self, r_addr, r_quantity, w_addr, w_regs, is_signed=False):
+        """
+        ([Standard Modbus TCP](../UF_ModbusTCP_Manual.md)) Write and Read Holding Registers (0x17)
+        
+        :param r_addr: the starting address of the register to be read
+        :param r_quantity: number of registers to read
+        :param w_addr: the starting address of the register to be written
+        :param w_regs: number of registers to write
+        :param is_signed: whether to convert the read register value into a signed form
+        :return: tuple((code, regs)) only when code is 0, the returned result is correct.
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.mask_write_holding_register(r_addr, r_quantity, w_addr, w_regs, is_signed)
+
+    def send_hex_cmd(self, datas, **kwargs):
+        """
+        Hexadecimal communication protocol instruction
+
+        :param datas: Hexadecimal data_list
+        :param timeout: timeout: wait timeout, seconds, default is 10s.
+        :return : Hexadecimal data_list or code
+            code: See the [API Code Documentation](./xarm_api_code.md#api-code) for details.
+                Note: code 129~144 means modbus tcp exception, the actual modbus tcp exception code is (code-0x80), refer to [Standard Modbus TCP](../UF_ModbusTCP_Manual.md)
+        """
+        return self._arm.send_hex_cmd(datas, **kwargs)
