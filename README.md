@@ -4,13 +4,12 @@
 xArm Python SDK
 
 ## Caution
-- During use, people should stay away from the robot arm to avoid accidental injury or damage to other items by the robot arm.
-- Protect the arm before use.
-- Before you exercise, please make sure you don't encounter obstacles.
-- Protect the arm before unlocking the motor.
+- Please keep away from the robot arm to avoid personal injury or equipment damage.
+- Make sure to do a safety assessment before moving to prevent collisions.
+- Protect the arm before unlocking the joint.
 
 ## Installation
-Install is not necessary, you can run examples without installation.Only Python3 is supported.
+&ensp;&ensp;you can run examples without installation.Only Python3 is supported.
 - download
 
   ```bash
@@ -28,30 +27,28 @@ Install is not necessary, you can run examples without installation.Only Python3
 
 - #### [API Code Document](doc/api/xarm_api_code.md)
 
+- #### [UFACTORY ModbusTCP Manual](doc/UF_ModbusTCP_Manual.md)
+
 ## Update Summary
+- > ### 1.13.0
+  - Compatible with the standard Modbus TCP protocol, providing part of the standard Modbus TCP protocol interface
 
-- > ### 1.9.0
-  - Support friction parameter identification interface
-  - Support relative motion
-  - Support xarm6-type11 firmware
-  - Repair time-consuming interface (identification) failure due to heartbeat mechanism
-  - Fix several bugs
+- > ### 1.12.2
+  - Support partial Task feedback (requires firmware version greater than or equal to v2.1.0)
 
-- > ### 1.8.4
-  - Support the Six-axis Force Torque Sensor (not a third party)
-  - Add threads to handle callbacks
-  - Modify the reporting processing logic and optimize the processing of sticky packets
-  - Fixed frequent switching of the pause state causing the program to hang
-  - Fix the program hangs when setting the mechanical claw position in speed mode
-  - Fix relative movement in unsynchronized position
+- > ### 1.11.6
+  - Correct the ambiguity that the `set_position_aa` interface is true when both relative and is_tool_coord are true. After the correction, when is_tool_coord is true, relative is invalid (previously is_tool_coord was invalid when relative was true)
 
-- > ### 1.8.0
+- > ### 1.11.5
+  - Optimization pause time is too long (wait=true)
+  - Add common motion api (Enabled after firmware version 1.11.100)
+  - The Cartesian motion-related interface adds the motion_type parameter to determine the planning method (Enabled after firmware version 1.11.100)
 
-  - Support for blocky code conversion and operation of xArmStudio-1.8.0
-  - The Velocity interface supports the duration parameter (requires firmware 1.8.0 or higher)
-  - Added identification interface (current identification and torque identification) (requires firmware 1.8.0 or higher)
-  - Support linear track interface (requires firmware 1.8.0 or higher)
-  - Support calling some studio APIs
+- > ### 1.11.0
+  - Support transparent transmission
+    - 240: `set_tgpio_modbus_timeout(..., is_transparent_transmission=True)`
+    - 241: `getset_tgpio_modbus_data(..., is_transparent_transmission=True)`
+  - Modified the centroid unit of the `ft_sensor_iden_load` and `ft_sensor_cali_load` interfaces to millimeters (originally meters)
 
 
 - >### [More](ReleaseNotes.md)
@@ -59,7 +56,7 @@ Install is not necessary, you can run examples without installation.Only Python3
 
 ## [Example](example/wrapper/)
 
-__Note: Before running the example, please modify the ip value in the [robot.conf](example/wrapper/robot.conf) file to the robot arm you want to control.__
+&ensp;&ensp; __Before running the example, please modify the IP in [robot.conf](example/wrapper/robot.conf) to corresponding IP you want to control.__
 
 - #### [0000-template](example/wrapper/common/0000-template.py)
 
@@ -85,11 +82,15 @@ __Note: Before running the example, please modify the ip value in the [robot.con
 
 - #####  [1007-counter](example/wrapper/common/1007-counter.py)
 
-- [__1008-move_line_aa__](example/wrapper/common/1008-move_line_aa.py)
+- #####  [1008-move_line_aa](example/wrapper/common/1008-move_line_aa.py)
 
-- [__1009-cartesian_velocity_control__](example/wrapper/common/1009-cartesian_velocity_control.py)
+- #####  [1009-cartesian_velocity_control](example/wrapper/common/1009-cartesian_velocity_control.py)
 
-- [__2000-joint_velocity_control__](example/wrapper/common/2000-joint_velocity_control.py)
+- #####  [1010-cartesian_online_trajectory_planning](example/wrapper/common/1010-cartesian_online_trajectory_planning.py)
+
+- #####  [2000-joint_velocity_control](example/wrapper/common/2000-joint_velocity_control.py)
+  
+- #####  [2006-joint_online_trajectory_planning](example/wrapper/common/2006-joint_online_trajectory_planning.py)
 
 - ##### 2001-move_joint --> [xarm5](example/wrapper/xarm5/2001-move_joint.py) --- [xarm6](example/wrapper/xarm6/2001-move_joint.py) --- [xarm7](example/wrapper/xarm7/2001-move_joint.py)
 
@@ -106,6 +107,12 @@ __Note: Before running the example, please modify the ip value in the [robot.con
 - ##### [3002-record_trajectory](example/wrapper/common/3002-record_trajectory.py)
 
 - ##### [3003-playback_trajectory](example/wrapper/common/3003-playback_trajectory.py)
+  
+- ##### [3004-get_report_data](example/wrapper/common/3004-get_report_data.py)
+  
+- ##### [3005-task_feedback](example/wrapper/common/3005-task_feedback.py)
+
+- ##### [3006-standard_modbus_tcp](example/wrapper/common/3006-standard_modbus_tcp.py)
 
 - ##### [5000-set_tgpio_modbus](example/wrapper/common/5000-set_tgpio_modbus.py)
 
@@ -337,7 +344,7 @@ __Note: Before running the example, please modify the ip value in the [robot.con
 - #### Other
   ```python
   arm.set_pause_time(...)
-  arm.shutdown_system(...)
+  arm.system_control(...)
   arm.clean_error()
   arm.clean_warn()
   arm.set_counter_reset()

@@ -1,6 +1,7 @@
 # xArmSDK API code description
 <!-- TOC --> 
 [Contents](#xarmsdk-api-code-description)
+- [xArmSDK API code description](#xarmsdk-api-code-description)
   - [API Code](#api-code)
   - [Controller Warn Code](#controller-warn-code)
   - [Controller Error Code](#controller-error-code)
@@ -43,6 +44,7 @@
 - 31: trajectory read/write failed
 - 32: trajectory read/write timeout
 - 33: playback trajectory timeout
+- 34: playback trajectory failed
 - 41: wait to set suction cup timeout
 - 80: linear track has error
 - 81: linear track sci is low
@@ -51,6 +53,9 @@
 - 101: too many consecutive failed tests
 - 102: end effector has error
 - 103: end effector is not enabled
+- 129: (standard modbus tcp)illegal/unsupported function code
+- 120: (standard modbus tcp)illegal target address
+- 131: (standard modbus tcp)exection of requested data
 
 ## Controller Warn Code
 - 11: uxbux que is full
@@ -92,6 +97,7 @@
 - 37: Abnormal movement in Manual Mode
 - 38: Abnormal Joint Angle
 - 39: Abnormal Communication Between Master and Slave IC of Power Board
+- 40: No IK available
 - 50: Six-axis Force Torque Sensor read error
 - 51: Six-axis Force Torque Sensor set mode error
 - 52: Six-axis Force Torque Sensor set zero error
