@@ -204,7 +204,7 @@ class GPIO(Base):
     def set_cgpio_digital_input_function(self, ionum, fun):
         assert isinstance(ionum, int) and 15 >= ionum >= 0
         ret = self.arm_cmd.cgpio_set_infun(ionum, fun)
-        self.log_api_info('API -> set_cgpio_digital_input_function(ionum={}, fun={}) -> code={}'.format(ionum, fun, ret[0]), code=ret[0])
+        # self.log_api_info('API -> set_cgpio_digital_input_function(ionum={}, fun={}) -> code={}'.format(ionum, fun, ret[0]), code=ret[0])
         return ret[0]
 
     @xarm_is_connected(_type='set')
